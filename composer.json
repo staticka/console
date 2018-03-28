@@ -1,0 +1,37 @@
+{
+    "name": "staticka/siemes",
+    "description": "A simple flat file content management system.",
+    "keywords": ["simple cms", "static cms", "siemes", "staticka"],
+    "homepage": "https://github.com/staticka/siemes",
+    "authors": [
+        {
+            "name": "Rougin Royce Gutib",
+            "email": "rougingutib@gmail.com",
+            "homepage": "https://rougin.github.io",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "staticka/staticka": "~0.1",
+        "mnapoli/front-yaml": "~1.6"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "~4.2|~5.7",
+        "scrutinizer/ocular": "~1.1.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Staticka\\Siemes\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Staticka\\Siemes\\": "tests"
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0-dev"
+        }
+    }
+}
