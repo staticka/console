@@ -20,21 +20,19 @@ class Post extends Page
     /**
      * Initializes the post instance.
      *
-     * @param string $content
+     * @param string $file
      * @param array  $data
      */
-    public function __construct($content, array $data = array())
+    public function __construct($file, array $data = array())
     {
-        $uri = str_replace('.md', '', basename($content));
+        $uri = str_replace('.md', '', basename($file));
 
         $this->uri = $uri[0] !== '/' ? '/' . $uri : $uri;
 
-        $this->content = (string) $content;
+        $this->content = $data['content'];
 
         $this->data = (array) $data;
 
-        $exists = isset($data['page']) === true;
-
-        $exists && $this->template = $data['page'];
+        $this->template = $data['page'];
     }
 }

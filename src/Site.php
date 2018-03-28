@@ -2,7 +2,6 @@
 
 namespace Staticka\Siemes;
 
-use Mni\FrontYAML\Parser;
 use Staticka\Content\MarkdownContent;
 use Staticka\Staticka;
 use Zapheus\Renderer\Renderer;
@@ -21,6 +20,11 @@ class Site extends Staticka
     protected $options = array('post_extension' => 'md', 'path' => null);
 
     /**
+     * @var \Staticka\Siemes\Parser
+     */
+    protected $parser;
+
+    /**
      * Initializes the site instance.
      *
      * @param array $options
@@ -28,6 +32,8 @@ class Site extends Staticka
     public function __construct(array $options = array())
     {
         $this->content = new MarkdownContent;
+
+        $this->parser = new Parser;
 
         $this->options = array_merge($this->options, $options);
 
@@ -41,22 +47,27 @@ class Site extends Staticka
     /**
      * Creates a new post.
      *
-     * @param  string      $content
-     * @param  array       $data
-     * @param  string|null $template
+     * @param  string $file
+     * @param  array  $data
      * @return self
      */
-    public function post($content, array $data = array(), $template = null)
+    public function post($file, array $data = array())
     {
-        $this->pages[] = new Post($content, $data, $template);
+        isset($data['page']) || $data['page'] = 'default';
+
+        $this->pages[] = new Post($file, (array) $data);
 
         return $this;
     }
 
+    /**
+     * Locates the posts from a specified directory.
+     *
+     * @param  string $directory
+     * @return self
+     */
     public function locate($directory)
     {
-        $parser = new Parser;
-
         $file = (string) $this->options['post_extension'];
 
         $pattern = $directory . '/*.' . $file;
@@ -66,30 +77,52 @@ class Site extends Staticka
         foreach ((array) $files as $file) {
             $content = (string) file_get_contents($file);
 
-            $document = $parser->parse($content, false);
+            $output = $this->parser->parse($content);
 
-            $data = $document->getYAML() ?: array();
+            $data = $this->parse($output[1], $output[0]);
 
-            array_push($this->pages, new Post($file, $data));
+            $this->post($file, (array) $data);
         }
 
         return $this;
     }
 
+    /**
+     * Parses data from the retrieved YAML values.
+     *
+     * @param  string $content
+     * @param  array  $data
+     * @return array
+     */
+    protected function parse($content, array $data)
+    {
+        $data['content'] = (string) $content;
+
+        $data['title'] = isset($data['title']) ? $data['title'] : '';
+
+        $html = (string) $this->content()->parse($content);
+
+        preg_match('/<h1>(.*?)<\/h1>/', $html, $matches);
+
+        $data['title'] = isset($matches[1]) ? $matches[1] : $data['title'];
+
+        return $data;
+    }
+
+    /**
+     * Performs a recursive search in glob.
+     *
+     * @param  string  $pattern
+     * @param  integer $flags
+     * @return array
+     */
     protected function rglob($pattern, $flags = 0)
     {
+        $separator = DIRECTORY_SEPARATOR;
+
         $flag = GLOB_ONLYDIR | GLOB_NOSORT;
 
-        list($files, $separator) = array(array(), DIRECTORY_SEPARATOR);
-
-        $defaults = (array) glob($pattern, $flags);
-
-        // Exclude files that came from "directory"
-        for ($i = 0; $i < count($defaults); $i++) {
-            $exists = strpos($defaults[$i], 'vendor') !== false;
-
-            $exists === false && $files[] = (string) $defaults[$i];
-        }
+        $files = glob($pattern, $flags);
 
         $items = glob(dirname($pattern) . '/*', $flag);
 

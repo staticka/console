@@ -11,15 +11,44 @@ A simple flat file content management system based on [Staticka](https://statick
 
 ## Install
 
-Via Composer
+Via [Composer](https://getcomposer.org)
 
 ``` bash
-$ composer require staticka/siemes
+$ composer global require staticka/siemes
 ```
 
 ## Usage
 
-Coming soon.
+**hello-world.md**
+
+```
+# Hello World!
+
+This is my first post that is built with Siemes by Staticka.
+```
+
+``` bash
+$ vendor\bin\siemes build
+```
+
+**build/hello-world/index.html**
+
+``` html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Hello World</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.min.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Hello World</h1>
+    <p>This is my first post that is built with Siemes by Staticka.</p>  
+  </div>
+</body>
+</html>
+```
 
 ## Change log
 
