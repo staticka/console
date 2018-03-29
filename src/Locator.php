@@ -108,7 +108,7 @@ class Locator
 
         preg_match('/<h1>(.*?)<\/h1>/', $html, $matches);
 
-        $data['title'] = isset($matches[1]) ? $matches[1] : $data['title'];
+        isset($matches[1]) && $data['title'] = $matches[1];
 
         return $data;
     }

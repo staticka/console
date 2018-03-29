@@ -3,6 +3,7 @@
     "description": "A simple flat file content management system.",
     "keywords": ["simple cms", "static cms", "siemes", "staticka"],
     "homepage": "https://github.com/staticka/siemes",
+    "license": "MIT",
     "authors": [
         {
             "name": "Rougin Royce Gutib",

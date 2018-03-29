@@ -43,26 +43,4 @@ class Website extends \Staticka\Staticka
 
         return $this;
     }
-
-    /**
-     * Parses data from the retrieved YAML values.
-     *
-     * @param  string $content
-     * @param  array  $data
-     * @return array
-     */
-    protected function parse($content, array $data)
-    {
-        $data['content'] = (string) $content;
-
-        $data['title'] = isset($data['title']) ? $data['title'] : '';
-
-        $html = (string) $this->content()->parse($content);
-
-        preg_match('/<h1>(.*?)<\/h1>/', $html, $matches);
-
-        $data['title'] = isset($matches[1]) ? $matches[1] : $data['title'];
-
-        return $data;
-    }
 }
