@@ -32,6 +32,8 @@ class Builder extends Command
 
         $this->addOption('output', null, $optional, 'Path for generated HTML', $output);
 
+        $this->addOption('website', null, $optional, 'Custom Website instance', null);
+
         $this->setHelp('Creates static HTML files based from Markdown content');
     }
 
@@ -44,18 +46,37 @@ class Builder extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $build = (string) $input->getOption('output');
+        $website = $input->getOption('website');
+
+        file_exists($website) && $website = require $website;
+
+        list($source, $build) = $this->paths($input);
+
+        $website === null && $website = new Website;
+
+        $website->locate((string) $source)->compile($build);
+
+        $message = '<info>Content built successfully!</info>';
+
+        $output->writeln((string) $message);
+    }
+
+    /**
+     * Returns the source and output directories.
+     *
+     * @param  \Symfony\Component\Console\Input\InputInterface $input
+     * @return array
+     */
+    protected function paths(InputInterface $input)
+    {
+        $output = (string) $input->getOption('output');
 
         $source = (string) $input->getOption('source');
 
         file_exists($source) && $source = realpath($source);
 
-        file_exists($build) && $build = realpath($build);
+        file_exists($output) && $output = realpath($output);
 
-        $site = new \Staticka\Siemes\Site;
-
-        $site->locate((string) $source)->compile((string) $build);
-
-        $output->writeln('<info>Content built successfully!</info>');
+        return array($source, $output);
     }
 }

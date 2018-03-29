@@ -28,7 +28,7 @@ This is my first post that is built with Siemes by Staticka.
 ```
 
 ``` bash
-$ vendor\bin\siemes build
+$ siemes build
 ```
 
 **build/hello-world/index.html**
@@ -39,13 +39,10 @@ $ vendor\bin\siemes build
 <head>
   <meta charset="UTF-8">
   <title>Hello World</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.min.css">
 </head>
 <body>
-  <div class="container">
-    <h1>Hello World</h1>
-    <p>This is my first post that is built with Siemes by Staticka.</p>  
-  </div>
+  <h1>Hello World</h1>
+  <p>This is my first post that is built with Siemes by Staticka.</p>
 </body>
 </html>
 ```
@@ -71,7 +68,7 @@ If you discover any security related issues, please email rougingutib@gmail.com 
 
 ## License
 
-The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
+The MIT License (MIT). Please see [License File][link-license] for more information.
 
 [ico-version]: https://img.shields.io/packagist/v/staticka/siemes.svg?style=flat-square
 [ico-license]: https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square

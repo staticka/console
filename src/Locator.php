@@ -2,22 +2,26 @@
 
 namespace Staticka\Siemes;
 
-use Staticka\Content\MarkdownContent;
-use Staticka\Staticka;
-use Zapheus\Renderer\Renderer;
+use Staticka\Content\ContentInterface;
+use Staticka\Page;
 
 /**
- * Site
+ * Locator
  *
  * @package Siemes
  * @author  Rougin Royce Gutib <rougingutib@gmail.com>
  */
-class Site extends Staticka
+class Locator
 {
     /**
-     * @var array
+     * @var \Staticka\Content\ContentInterface
      */
-    protected $options = array('post_extension' => 'md', 'path' => null);
+    protected $content;
+
+    /**
+     * @var \Staticka\Page[]
+     */
+    protected $pages = array();
 
     /**
      * @var \Staticka\Siemes\Parser
@@ -25,39 +29,15 @@ class Site extends Staticka
     protected $parser;
 
     /**
-     * Initializes the site instance.
+     * Initializes the content instance.
      *
-     * @param array $options
+     * @param \Staticka\Content\ContentInterface $content
      */
-    public function __construct(array $options = array())
+    public function __construct(ContentInterface $content)
     {
-        $this->content = new MarkdownContent;
+        $this->content = $content;
 
         $this->parser = new Parser;
-
-        $this->options = array_merge($this->options, $options);
-
-        $path = (string) $this->options['path'];
-
-        $path === '' && $path = (string) __DIR__ . '/Pages';
-
-        $this->renderer = new Renderer((string) $path);
-    }
-
-    /**
-     * Creates a new post.
-     *
-     * @param  string $file
-     * @param  array  $data
-     * @return self
-     */
-    public function post($file, array $data = array())
-    {
-        isset($data['page']) || $data['page'] = 'default';
-
-        $this->pages[] = new Post($file, (array) $data);
-
-        return $this;
     }
 
     /**
@@ -68,23 +48,47 @@ class Site extends Staticka
      */
     public function locate($directory)
     {
-        $file = (string) $this->options['post_extension'];
+        $extension = $this->content->extension();
 
-        $pattern = $directory . '/*.' . $file;
+        $pattern = $directory . '/*.' . $extension;
 
         $files = $this->rglob((string) $pattern);
 
         foreach ((array) $files as $file) {
             $content = (string) file_get_contents($file);
 
-            $output = $this->parser->parse($content);
+            $output = (array) $this->parser->parse($content);
 
             $data = $this->parse($output[1], $output[0]);
 
-            $this->post($file, (array) $data);
+            isset($data['layout']) || $data['layout'] = 'default';
+
+            $this->pages[] = $this->page($file, (array) $data);
         }
 
-        return $this;
+        return $this->pages;
+    }
+
+    /**
+     * Creates a new page.
+     *
+     * @param  string $file
+     * @param  array  $data
+     * @return \Staticka\Page
+     */
+    protected function page($file, array $data = array())
+    {
+        $extension = (string) '.' . $this->content->extension();
+
+        $uri = str_replace($extension, '', basename($file));
+
+        isset($data['permalink']) && $uri = $data['permalink'];
+
+        $uri = $uri[0] !== '/' ? '/' . $uri : (string) $uri;
+
+        list($content, $page) = array($data['content'], $data['layout']);
+
+        return new Page($uri, $content, $page, (array) $data);
     }
 
     /**
@@ -100,7 +104,7 @@ class Site extends Staticka
 
         $data['title'] = isset($data['title']) ? $data['title'] : '';
 
-        $html = (string) $this->content()->parse($content);
+        $html = (string) $this->content->parse($content);
 
         preg_match('/<h1>(.*?)<\/h1>/', $html, $matches);
 
