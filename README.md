@@ -7,7 +7,7 @@
 [![Quality Score][ico-code-quality]][link-code-quality]
 [![Total Downloads][ico-downloads]][link-downloads]
 
-A simple flat file content management system based on [Staticka](https://staticka.github.io).
+A easy-to-use flat file content management system based on [Staticka](https://staticka.github.io).
 
 ## Install
 
