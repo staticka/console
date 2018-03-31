@@ -64,7 +64,7 @@ If you discover any security related issues, please email rougingutib@gmail.com 
 ## Credits
 
 - [Rougin Royce Gutib][link-author]
-- [All Contributors][link-contributors]
+- [All contributors][link-contributors]
 
 ## License
 
