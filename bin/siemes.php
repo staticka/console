@@ -1,8 +1,14 @@
 <?php
 
-require 'vendor/autoload.php';
-
 use Symfony\Component\Console\Application;
+
+$autoload = __DIR__ . '/vendor/autoload.php';
+
+$global = __DIR__ . '/../../autoload.php';
+
+file_exists($global) && $autoload = $global;
+
+require (string) $autoload;
 
 $changelog = file(__DIR__ . '/../CHANGELOG.md');
 
