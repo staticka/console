@@ -46,36 +46,35 @@ class Builder extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $website = $input->getOption('website');
+        $option = realpath($input->getOption('website'));
 
-        file_exists($website) && $website = require $website;
+        $website = new \Staticka\Siemes\Website;
 
-        list($source, $build) = $this->paths($input);
+        file_exists($option) && $website = require (string) $option;
 
-        $website === null && $website = new Website;
+        list($source, $build) = $this->paths($input, $website);
 
-        $website->locate((string) $source)->compile($build);
+        $website->locate((string) $source)->compile((string) $build);
 
-        $message = '<info>Content built successfully!</info>';
-
-        $output->writeln((string) $message);
+        $output->writeln('<info>Content built successfully!</info>');
     }
 
     /**
      * Returns the source and output directories.
      *
      * @param  \Symfony\Component\Console\Input\InputInterface $input
+     * @param  \Staticka\Siemes\Website                        $website
      * @return array
      */
-    protected function paths(InputInterface $input)
+    protected function paths(InputInterface $input, Website $website)
     {
-        $output = (string) $input->getOption('output');
+        $source = realpath($input->getOption('source'));
 
-        $source = (string) $input->getOption('source');
+        $output = realpath($input->getOption('output'));
 
-        file_exists($source) && $source = realpath($source);
+        $website->source() !== '' && $source = $website->source();
 
-        file_exists($output) && $output = realpath($output);
+        $website->output() !== '' && $output = $website->output();
 
         return array($source, $output);
     }

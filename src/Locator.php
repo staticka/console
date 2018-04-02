@@ -104,11 +104,13 @@ class Locator
 
         $data['title'] = isset($data['title']) ? $data['title'] : '';
 
-        $html = (string) $this->content->parse($content);
+        if ($data['title'] === '') {
+            $html = (string) $this->content->parse($content);
 
-        preg_match('/<h1>(.*?)<\/h1>/', $html, $matches);
+            preg_match('/<h1>(.*?)<\/h1>/', $html, $matches);
 
-        isset($matches[1]) && $data['title'] = $matches[1];
+            isset($matches[1]) && $data['title'] = $matches[1];
+        }
 
         return $data;
     }
