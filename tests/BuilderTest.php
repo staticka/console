@@ -36,9 +36,7 @@ class BuilderTest extends \PHPUnit_Framework_TestCase
     {
         $command = new CommandTester($this->command);
 
-        $options = array('--source' => __DIR__ . '/Fixture');
-
-        $options['--output'] = __DIR__ . '/Build';
+        $options = array('--output' => __DIR__ . '/Build');
 
         $options['--website'] = __DIR__ . '/Fixture/Website.php';
 
