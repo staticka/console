@@ -7,7 +7,7 @@
 [![Quality Score][ico-code-quality]][link-code-quality]
 [![Total Downloads][ico-downloads]][link-downloads]
 
-A simple flat file content management system based on [Staticka](https://staticka.github.io).
+A easy-to-use flat file content management system based on [Staticka](https://staticka.github.io).
 
 ## Install
 
@@ -49,7 +49,7 @@ $ siemes build
 
 ## Change log
 
-Please see [CHANGELOG](CHANGELOG.md) for more information what has changed recently.
+Please see [CHANGELOG][link-changelog] for more information what has changed recently.
 
 ## Testing
 
@@ -64,7 +64,7 @@ If you discover any security related issues, please email rougingutib@gmail.com 
 ## Credits
 
 - [Rougin Royce Gutib][link-author]
-- [All Contributors][link-contributors]
+- [All contributors][link-contributors]
 
 ## License
 
@@ -78,6 +78,7 @@ The MIT License (MIT). Please see [License File][link-license] for more informat
 [ico-downloads]: https://img.shields.io/packagist/dt/staticka/siemes.svg?style=flat-square
 
 [link-author]: https://rougin.github.io
+[link-changelog]: https://github.com/staticka/siemes/CHANGELOG.md
 [link-code-quality]: https://scrutinizer-ci.com/g/staticka/siemes
 [link-contributors]: https://github.com/staticka/siemes/contributors
 [link-downloads]: https://packagist.org/packages/staticka/siemes
