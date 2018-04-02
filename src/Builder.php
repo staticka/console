@@ -54,8 +54,7 @@ class Builder extends Command
 
         list($source, $build) = $this->paths($input, $website);
 
-        echo $source . PHP_EOL;
-        echo $build . PHP_EOL;
+        file_exists($build) || $build = $input->getOption('output');
 
         $website->locate((string) $source)->compile((string) $build);
 
@@ -75,9 +74,9 @@ class Builder extends Command
 
         $output = realpath($input->getOption('output'));
 
-        $website->source() !== '' && $source = $website->source();
-
         $website->output() !== '' && $output = $website->output();
+
+        $website->source() !== '' && $source = $website->source();
 
         return array($source, $output);
     }
