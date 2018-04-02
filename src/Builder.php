@@ -54,6 +54,9 @@ class Builder extends Command
 
         list($source, $build) = $this->paths($input, $website);
 
+        echo $source . PHP_EOL;
+        echo $build . PHP_EOL;
+
         $website->locate((string) $source)->compile((string) $build);
 
         $output->writeln('<info>Content built successfully!</info>');

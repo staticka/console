@@ -68,7 +68,7 @@ If you discover any security related issues, please email rougingutib@gmail.com 
 
 ## License
 
-The MIT License (MIT). Please see [License File][link-license] for more information.
+The MIT License (MIT). Please see [LICENSE][link-license] for more information.
 
 [ico-version]: https://img.shields.io/packagist/v/staticka/siemes.svg?style=flat-square
 [ico-license]: https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square
@@ -78,11 +78,11 @@ The MIT License (MIT). Please see [License File][link-license] for more informat
 [ico-downloads]: https://img.shields.io/packagist/dt/staticka/siemes.svg?style=flat-square
 
 [link-author]: https://rougin.github.io
-[link-changelog]: https://github.com/staticka/siemes/CHANGELOG.md
+[link-changelog]: https://github.com/staticka/siemes/blob/master/CHANGELOG.md
 [link-code-quality]: https://scrutinizer-ci.com/g/staticka/siemes
 [link-contributors]: https://github.com/staticka/siemes/contributors
 [link-downloads]: https://packagist.org/packages/staticka/siemes
-[link-license]: https://github.com/staticka/siemes/LICENSE.md
+[link-license]: https://github.com/staticka/siemes/blob/master/LICENSE.md
 [link-packagist]: https://packagist.org/packages/staticka/siemes
 [link-scrutinizer]: https://scrutinizer-ci.com/g/staticka/siemes/code-structure
 [link-travis]: https://travis-ci.org/staticka/siemes
