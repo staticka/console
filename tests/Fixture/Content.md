@@ -1,5 +1,6 @@
 ---
 title: Brave New World
+layout: bootstrap
 ---
 
 # Hello World

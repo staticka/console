@@ -19,6 +19,8 @@ $ composer global require staticka/siemes
 
 ## Usage
 
+Create a new file named `hello-world.md`:
+
 **hello-world.md**
 
 ```
@@ -27,9 +29,13 @@ $ composer global require staticka/siemes
 This is my first post that is built with Siemes by Staticka.
 ```
 
+Then run the `siemes build` command to build the files:
+
 ``` bash
 $ siemes build
 ```
+
+To see the output, open `build/hello-world/index.html` in a web browser.
 
 **build/hello-world/index.html**
 
@@ -46,6 +52,32 @@ $ siemes build
 </body>
 </html>
 ```
+
+### Options
+
+* `--source` - Location of the content files
+
+``` bash
+$ siemes build --source="pages"
+```
+
+Looks for content files from the `page` directory.
+
+* `--output` - Path for generated HTML
+
+``` bash
+$ siemes build --output="output"
+```
+
+Puts all the compiled content files to the `output` directory.
+
+* `--website` - Custom Website instance
+
+``` bash
+$ siemes build --website="Acme.php"
+```
+
+Uses the `Acme.php` as the `Siemes\Website` instance.
 
 ## Change log
 

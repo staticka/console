@@ -3,6 +3,7 @@
 namespace Staticka\Siemes;
 
 use Staticka\Content\ContentInterface;
+use Staticka\Matter;
 use Staticka\Page;
 
 /**
@@ -19,14 +20,14 @@ class Locator
     protected $content;
 
     /**
+     * @var string
+     */
+    protected $directory;
+
+    /**
      * @var \Staticka\Page[]
      */
     protected $pages = array();
-
-    /**
-     * @var \Staticka\Siemes\Parser
-     */
-    protected $parser;
 
     /**
      * Initializes the content instance.
@@ -36,8 +37,6 @@ class Locator
     public function __construct(ContentInterface $content)
     {
         $this->content = $content;
-
-        $this->parser = new Parser;
     }
 
     /**
@@ -50,20 +49,16 @@ class Locator
     {
         $extension = $this->content->extension();
 
+        $this->directory = (string) $directory;
+
         $pattern = $directory . '/*.' . $extension;
 
         $files = $this->rglob((string) $pattern);
 
         foreach ((array) $files as $file) {
-            $content = (string) file_get_contents($file);
+            $data = array('layout' => (string) 'default');
 
-            $output = (array) $this->parser->parse($content);
-
-            $data = $this->parse($output[1], $output[0]);
-
-            isset($data['layout']) || $data['layout'] = 'default';
-
-            $this->pages[] = $this->page($file, (array) $data);
+            $this->pages[] = $this->page($file, $data);
         }
 
         return $this->pages;
@@ -78,41 +73,19 @@ class Locator
      */
     protected function page($file, array $data = array())
     {
-        $extension = (string) '.' . $this->content->extension();
+        $filename = str_replace($this->directory, '', $file);
 
-        $uri = str_replace($extension, '', basename($file));
+        $filename = str_replace('\\', '/', $filename);
 
-        isset($data['permalink']) && $uri = $data['permalink'];
+        $extension = '.' . $this->content->extension();
 
-        $uri = $uri[0] !== '/' ? '/' . $uri : (string) $uri;
+        $uri = strtolower(str_replace($extension, '', $filename));
 
-        list($content, $page) = array($data['content'], $data['layout']);
+        $uri = str_replace('/index', '', $uri);
 
-        return new Page($uri, $content, $page, (array) $data);
-    }
+        $data['permalink'] = $uri[0] !== '/' ? '/' . $uri : $uri;
 
-    /**
-     * Parses data from the retrieved YAML values.
-     *
-     * @param  string $content
-     * @param  array  $data
-     * @return array
-     */
-    protected function parse($content, array $data)
-    {
-        $data['content'] = (string) $content;
-
-        $data['title'] = isset($data['title']) ? $data['title'] : '';
-
-        if ($data['title'] === '') {
-            $html = (string) $this->content->parse($content);
-
-            preg_match('/<h1>(.*?)<\/h1>/', $html, $matches);
-
-            isset($matches[1]) && $data['title'] = $matches[1];
-        }
-
-        return $data;
+        return new Page($file, (array) $data);
     }
 
     /**
