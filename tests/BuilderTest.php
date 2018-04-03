@@ -42,7 +42,7 @@ class BuilderTest extends \PHPUnit_Framework_TestCase
 
         $command->execute((array) $options);
 
-        $expected = __DIR__ . '/Build/Content/index.html';
+        $expected = __DIR__ . '/Build/content/index.html';
 
         $this->assertFileExists($expected);
     }
