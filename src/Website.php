@@ -12,7 +12,7 @@ use Zapheus\Renderer\RendererInterface;
  * @package Console
  * @author  Rougin Royce Gutib <rougingutib@gmail.com>
  */
-class Website extends \Staticka\Staticka
+class Website extends \Staticka\Website
 {
     /**
      * Directory path of the source files.
