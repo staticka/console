@@ -33,8 +33,6 @@ class Builder extends Command
         $this->addOption('output', null, $optional, 'Path for the generated files', $output);
 
         $this->addOption('website', null, $optional, 'Specify a custom Website instance', null);
-
-        $this->setHelp('Creates static HTML files based from Markdown content');
     }
 
     /**
