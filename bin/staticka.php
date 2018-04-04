@@ -14,8 +14,8 @@ $changelog = file(__DIR__ . '/../CHANGELOG.md');
 
 $version = substr($changelog[4], 3, 5);
 
-$app = new Application('Siemes', $version);
+$app = new Application('Staticka Console', $version);
 
-$builder = new Staticka\Siemes\Builder;
+$builder = new Staticka\Console\Builder;
 
 $app->add($builder) && $app->run();

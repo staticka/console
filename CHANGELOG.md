@@ -1,8 +1,8 @@
 # Changelog
 
-All notable changes to `Siemes` will be documented in this file.
+All notable changes to `Console` will be documented in this file.
 
 ## 0.1.0 - Unreleased
 
 ### Added
-- `Siemes` library
+- `Console` library

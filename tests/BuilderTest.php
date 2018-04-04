@@ -1,6 +1,6 @@
 <?php
 
-namespace Staticka\Siemes;
+namespace Staticka\Console;
 
 use Symfony\Component\Console\Tester\CommandTester;
 
@@ -13,7 +13,7 @@ use Symfony\Component\Console\Tester\CommandTester;
 class BuilderTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var \Staticka\Siemes\Builder
+     * @var \Staticka\Console\Builder
      */
     protected $command;
 

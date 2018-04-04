@@ -1,8 +1,8 @@
 {
-    "name": "staticka/siemes",
-    "description": "A simple flat file content management system.",
-    "keywords": ["simple cms", "static cms", "siemes", "staticka"],
-    "homepage": "https://github.com/staticka/siemes",
+    "name": "staticka/console",
+    "description": "An easy-to-use console application for Staticka.",
+    "keywords": ["console", "generator", "static site", "staticka"],
+    "homepage": "https://github.com/staticka/console",
     "license": "MIT",
     "authors": [
         {
@@ -21,15 +21,15 @@
         "phpunit/phpunit": "~4.2|~5.7",
         "scrutinizer/ocular": "~1.1.0"
     },
-    "bin": ["bin/siemes", "bin/siemes.php"],
+    "bin": ["bin/staticka", "bin/staticka.php"],
     "autoload": {
         "psr-4": {
-            "Staticka\\Siemes\\": "src"
+            "Staticka\\Console\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Staticka\\Siemes\\": "tests"
+            "Staticka\\Console\\": "tests"
         }
     },
     "extra": {

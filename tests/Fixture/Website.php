@@ -2,7 +2,7 @@
 
 use Staticka\Filter\HtmlMinifier;
 
-$website = new Staticka\Siemes\Website;
+$website = new Staticka\Console\Website;
 
 $website->set('source', __DIR__);
 

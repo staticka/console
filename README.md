@@ -1,4 +1,4 @@
-# Siemes
+# Console
 
 [![Latest Version on Packagist][ico-version]][link-packagist]
 [![Software License][ico-license]][link-license]
@@ -7,14 +7,14 @@
 [![Quality Score][ico-code-quality]][link-code-quality]
 [![Total Downloads][ico-downloads]][link-downloads]
 
-A easy-to-use flat file content management system based on [Staticka](https://staticka.github.io).
+An easy-to-use console application for [Staticka](https://staticka.github.io). Useful for building content files and templates into static HTMLs with ease using the commands from the terminal.
 
 ## Install
 
 Via [Composer](https://getcomposer.org)
 
 ``` bash
-$ composer global require staticka/siemes
+$ composer global require staticka/console
 ```
 
 ## Usage
@@ -26,13 +26,13 @@ Create a new file named `hello-world.md`:
 ```
 # Hello World!
 
-This is my first post that is built with Siemes by Staticka.
+This is my first post that is built by Staticka.
 ```
 
-Then run the `siemes build` command to build the files:
+Then run the `staticka build` command to build the files:
 
 ``` bash
-$ siemes build
+$ staticka build
 ```
 
 To see the output, open `build/hello-world/index.html` in a web browser.
@@ -48,7 +48,7 @@ To see the output, open `build/hello-world/index.html` in a web browser.
 </head>
 <body>
   <h1>Hello World</h1>
-  <p>This is my first post that is built with Siemes by Staticka.</p>
+  <p>This is my first post that is built by Staticka.</p>
 </body>
 </html>
 ```
@@ -58,26 +58,23 @@ To see the output, open `build/hello-world/index.html` in a web browser.
 * `--source` - Location of the content files
 
 ``` bash
-$ siemes build --source="pages"
+$ staticka build --source="pages"
+$ # Checks content files from `page` directory.
 ```
 
-Looks for content files from the `page` directory.
-
-* `--output` - Path for generated HTML
+* `--output` - Path for the generated files
 
 ``` bash
-$ siemes build --output="output"
+$ staticka build --output="output"
+$ # Puts all the compiled files to `output` directory.
 ```
 
-Puts all the compiled content files to the `output` directory.
-
-* `--website` - Custom Website instance
+* `--website` - Specify a custom Website instance
 
 ``` bash
-$ siemes build --website="Acme.php"
+$ staticka build --website="Acme.php"
+$ # Uses `Acme.php` as `Siemes\Website` instance.
 ```
-
-Uses the `Acme.php` as the `Siemes\Website` instance.
 
 ## Change log
 
@@ -102,19 +99,19 @@ If you discover any security related issues, please email rougingutib@gmail.com 
 
 The MIT License (MIT). Please see [LICENSE][link-license] for more information.
 
-[ico-version]: https://img.shields.io/packagist/v/staticka/siemes.svg?style=flat-square
+[ico-version]: https://img.shields.io/packagist/v/staticka/console.svg?style=flat-square
 [ico-license]: https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square
-[ico-travis]: https://img.shields.io/travis/staticka/siemes/master.svg?style=flat-square
-[ico-scrutinizer]: https://img.shields.io/scrutinizer/coverage/g/staticka/siemes.svg?style=flat-square
-[ico-code-quality]: https://img.shields.io/scrutinizer/g/staticka/siemes.svg?style=flat-square
-[ico-downloads]: https://img.shields.io/packagist/dt/staticka/siemes.svg?style=flat-square
+[ico-travis]: https://img.shields.io/travis/staticka/console/master.svg?style=flat-square
+[ico-scrutinizer]: https://img.shields.io/scrutinizer/coverage/g/staticka/console.svg?style=flat-square
+[ico-code-quality]: https://img.shields.io/scrutinizer/g/staticka/console.svg?style=flat-square
+[ico-downloads]: https://img.shields.io/packagist/dt/staticka/console.svg?style=flat-square
 
 [link-author]: https://rougin.github.io
-[link-changelog]: https://github.com/staticka/siemes/blob/master/CHANGELOG.md
-[link-code-quality]: https://scrutinizer-ci.com/g/staticka/siemes
-[link-contributors]: https://github.com/staticka/siemes/contributors
-[link-downloads]: https://packagist.org/packages/staticka/siemes
-[link-license]: https://github.com/staticka/siemes/blob/master/LICENSE.md
-[link-packagist]: https://packagist.org/packages/staticka/siemes
-[link-scrutinizer]: https://scrutinizer-ci.com/g/staticka/siemes/code-structure
-[link-travis]: https://travis-ci.org/staticka/siemes
+[link-changelog]: https://github.com/staticka/console/blob/master/CHANGELOG.md
+[link-code-quality]: https://scrutinizer-ci.com/g/staticka/console
+[link-contributors]: https://github.com/staticka/console/contributors
+[link-downloads]: https://packagist.org/packages/staticka/console
+[link-license]: https://github.com/staticka/console/blob/master/LICENSE.md
+[link-packagist]: https://packagist.org/packages/staticka/console
+[link-scrutinizer]: https://scrutinizer-ci.com/g/staticka/console/code-structure
+[link-travis]: https://travis-ci.org/staticka/console

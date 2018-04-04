@@ -1,6 +1,6 @@
 <?php
 
-namespace Staticka\Siemes;
+namespace Staticka\Console;
 
 use Staticka\Content\ContentInterface;
 use Zapheus\Renderer\Renderer;
@@ -9,7 +9,7 @@ use Zapheus\Renderer\RendererInterface;
 /**
  * Website
  *
- * @package Siemes
+ * @package Console
  * @author  Rougin Royce Gutib <rougingutib@gmail.com>
  */
 class Website extends \Staticka\Staticka

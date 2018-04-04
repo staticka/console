@@ -1,15 +1,13 @@
 <?php
 
-namespace Staticka\Siemes;
+namespace Staticka\Console;
 
 use Staticka\Content\ContentInterface;
-use Staticka\Matter;
-use Staticka\Page;
 
 /**
  * Locator
  *
- * @package Siemes
+ * @package Console
  * @author  Rougin Royce Gutib <rougingutib@gmail.com>
  */
 class Locator
@@ -85,7 +83,7 @@ class Locator
 
         $data['permalink'] = $uri[0] !== '/' ? '/' . $uri : $uri;
 
-        return new Page($file, (array) $data);
+        return new \Staticka\Page($file, (array) $data);
     }
 
     /**
