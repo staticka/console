@@ -7,7 +7,7 @@
 [![Quality Score][ico-code-quality]][link-code-quality]
 [![Total Downloads][ico-downloads]][link-downloads]
 
-An easy-to-use console application for [Staticka](https://staticka.github.io). Useful for building content files and templates into static HTMLs with ease using the commands from the terminal.
+A console application for [Staticka](https://staticka.github.io). Useful for building content and templates into static HTMLs using terminal commands.
 
 ## Install
 
