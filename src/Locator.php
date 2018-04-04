@@ -79,7 +79,7 @@ class Locator
 
         $uri = strtolower(str_replace($extension, '', $filename));
 
-        $uri = str_replace('/index', '', $uri);
+        $uri = str_replace('/index', '/', $uri);
 
         $data['permalink'] = $uri[0] !== '/' ? '/' . $uri : $uri;
 
