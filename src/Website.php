@@ -15,13 +15,6 @@ use Zapheus\Renderer\RendererInterface;
 class Website extends \Staticka\Staticka
 {
     /**
-     * Directory path/s for the templates.
-     *
-     * @var array|string
-     */
-    protected $paths;
-
-    /**
      * Directory path of the source files.
      *
      * @var string
@@ -43,9 +36,9 @@ class Website extends \Staticka\Staticka
      */
     public function __construct(RendererInterface $renderer = null, ContentInterface $content = null)
     {
-        $this->paths = __DIR__ . DIRECTORY_SEPARATOR . 'Pages';
+        $path = __DIR__ . DIRECTORY_SEPARATOR . 'Pages';
 
-        $renderer === null && $renderer = new Renderer($this->paths);
+        $renderer === null && $renderer = new Renderer($path);
 
         parent::__construct($renderer, $content);
     }
