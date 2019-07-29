@@ -2,39 +2,52 @@
     "name": "staticka/console",
     "description": "An easy-to-use console application for Staticka.",
     "keywords": ["console", "generator", "static site", "staticka"],
-    "homepage": "https://github.com/staticka/console",
+    "homepage": "https://staticka.github.io/console/",
     "license": "MIT",
-    "authors": [
+    "authors":
+    [
         {
-            "name": "Rougin Royce Gutib",
             "email": "rougingutib@gmail.com",
-            "homepage": "https://rougin.github.io",
-            "role": "Developer"
+            "homepage": "https://rougin.github.io/",
+            "name": "Rougin Gutib",
+            "role": "Software Engineer"
         }
     ],
-    "require": {
+    "require":
+    {
         "php": ">=5.3.0",
-        "staticka/staticka": "~0.1",
+        "staticka/staticka": "~0.1.0",
         "symfony/console": ">=2.8.0",
         "symfony/yaml": ">=2.8.0"
     },
-    "require-dev": {
+    "require-dev":
+    {
         "phpunit/phpunit": "~4.2|~5.7",
         "scrutinizer/ocular": "~1.1.0"
     },
-    "bin": ["bin/staticka", "bin/staticka.php"],
-    "autoload": {
-        "psr-4": {
+    "bin":
+    [
+        "bin/staticka",
+        "bin/staticka.php"
+    ],
+    "autoload":
+    {
+        "psr-4":
+        {
             "Staticka\\Console\\": "src"
         }
     },
-    "autoload-dev": {
-        "psr-4": {
+    "autoload-dev":
+    {
+        "psr-4":
+        {
             "Staticka\\Console\\": "tests"
         }
     },
-    "extra": {
-        "branch-alias": {
+    "extra":
+    {
+        "branch-alias":
+        {
             "dev-master": "1.0-dev"
         }
     }
