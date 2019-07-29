@@ -7,17 +7,17 @@
 [![Quality Score][ico-code-quality]][link-code-quality]
 [![Total Downloads][ico-downloads]][link-downloads]
 
-A console application for [Staticka](https://staticka.github.io). Useful for building content and templates into static HTMLs using terminal commands.
+A console application for [Staticka](https://staticka.github.io/). Useful for building content and templates into static HTMLs using terminal commands.
 
-## Install
+## Installation
 
-Via [Composer](https://getcomposer.org)
+Install `Console` via [Composer](https://getcomposer.org/):
 
 ``` bash
-$ composer global require staticka/console
+$ composer require staticka/console
 ```
 
-## Usage
+## Basic Usage
 
 Create a new file named `hello-world.md`:
 
@@ -76,7 +76,7 @@ $ staticka build --website="Acme.php"
 $ # Uses `Acme.php` as `Siemes\Website` instance.
 ```
 
-## Change log
+## Changelog
 
 Please see [CHANGELOG][link-changelog] for more information what has changed recently.
 
@@ -86,27 +86,21 @@ Please see [CHANGELOG][link-changelog] for more information what has changed rec
 $ composer test
 ```
 
-## Security
-
-If you discover any security related issues, please email rougingutib@gmail.com instead of using the issue tracker.
-
 ## Credits
 
-- [Rougin Royce Gutib][link-author]
 - [All contributors][link-contributors]
 
 ## License
 
 The MIT License (MIT). Please see [LICENSE][link-license] for more information.
 
-[ico-version]: https://img.shields.io/packagist/v/staticka/console.svg?style=flat-square
-[ico-license]: https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square
-[ico-travis]: https://img.shields.io/travis/staticka/console/master.svg?style=flat-square
-[ico-scrutinizer]: https://img.shields.io/scrutinizer/coverage/g/staticka/console.svg?style=flat-square
 [ico-code-quality]: https://img.shields.io/scrutinizer/g/staticka/console.svg?style=flat-square
 [ico-downloads]: https://img.shields.io/packagist/dt/staticka/console.svg?style=flat-square
+[ico-license]: https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square
+[ico-scrutinizer]: https://img.shields.io/scrutinizer/coverage/g/staticka/console.svg?style=flat-square
+[ico-travis]: https://img.shields.io/travis/staticka/console/master.svg?style=flat-square
+[ico-version]: https://img.shields.io/packagist/v/staticka/console.svg?style=flat-square
 
-[link-author]: https://rougin.github.io
 [link-changelog]: https://github.com/staticka/console/blob/master/CHANGELOG.md
 [link-code-quality]: https://scrutinizer-ci.com/g/staticka/console
 [link-contributors]: https://github.com/staticka/console/contributors
