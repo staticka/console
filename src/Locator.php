@@ -8,7 +8,7 @@ use Staticka\Content\ContentInterface;
  * Locator
  *
  * @package Console
- * @author  Rougin Royce Gutib <rougingutib@gmail.com>
+ * @author  Rougin Gutib <rougingutib@gmail.com>
  */
 class Locator
 {
