@@ -8,7 +8,7 @@ use Symfony\Component\Console\Tester\CommandTester;
  * Builder Test
  *
  * @package Staticka
- * @author  Rougin Royce Gutib <rougingutib@gmail.com>
+ * @author  Rougin Gutib <rougingutib@gmail.com>
  */
 class BuilderTest extends \PHPUnit_Framework_TestCase
 {
