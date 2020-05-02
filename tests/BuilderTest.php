@@ -2,6 +2,7 @@
 
 namespace Staticka\Console;
 
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\Console\Tester\CommandTester;
 
 /**
@@ -10,7 +11,7 @@ use Symfony\Component\Console\Tester\CommandTester;
  * @package Staticka
  * @author  Rougin Gutib <rougingutib@gmail.com>
  */
-class BuilderTest extends \PHPUnit_Framework_TestCase
+class BuilderTest extends TestCase
 {
     /**
      * @var \Staticka\Console\Builder
