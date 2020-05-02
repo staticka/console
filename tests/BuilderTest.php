@@ -18,31 +18,60 @@ class BuilderTest extends \PHPUnit_Framework_TestCase
     protected $command;
 
     /**
-     * Sets up the builder command instance.
+     * @var \Staticka\Console\Creator
+     */
+    protected $creator;
+
+    /**
+     * @var string[]
+     */
+    protected $paths = [];
+
+    /**
+     * @var string[]
+     */
+    protected $styles = [];
+
+    /**
+     * Prepates the command instance.
      *
      * @return void
      */
     public function setUp()
     {
-        $this->command = new Builder;
+        $composer = new Composer(__DIR__ . '/Fixtures');
+
+        $data = $composer->data();
+
+        $this->styles = $data['styles'];
+
+        $this->paths = $data['paths'];
+
+        $this->command = new Builder($this->paths, $this->styles);
+
+        $this->command->data((array) $data);
+
+        $this->creator = new Creator($this->paths);
     }
 
     /**
-     * Tests Builder::execute.
+     * Tests Creator::execute.
      *
      * @return void
      */
     public function testExecuteMethod()
     {
+        $name = (string) 'Hello World';
+
+        $creator = new CommandTester($this->creator);
+
+        $creator->execute(compact('name'));
+
         $command = new CommandTester($this->command);
 
-        $options = array('--output' => __DIR__ . '/Build');
+        $command->execute(array());
 
-        $options['--website'] = __DIR__ . '/Fixture/Website.php';
-
-        $command->execute((array) $options);
-
-        $expected = __DIR__ . '/Build/content/index.html';
+        $expected = $this->paths['public'] . '/hello-world/index.html';
 
         $this->assertFileExists($expected);
     }

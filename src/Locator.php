@@ -2,88 +2,126 @@
 
 namespace Staticka\Console;
 
-use Staticka\Content\ContentInterface;
-
 /**
  * Locator
  *
- * @package Console
+ * @package Staticka
  * @author  Rougin Gutib <rougingutib@gmail.com>
  */
 class Locator
 {
     /**
-     * @var \Staticka\Content\ContentInterface
+     * @var string[]
      */
-    protected $content;
+    protected $files;
 
     /**
-     * @var string
+     * @var string[]
      */
-    protected $directory;
+    protected $paths;
 
     /**
-     * @var \Staticka\Page[]
+     * @param string[] $paths
      */
-    protected $pages = array();
-
-    /**
-     * Initializes the content instance.
-     *
-     * @param \Staticka\Content\ContentInterface $content
-     */
-    public function __construct(ContentInterface $content)
+    public function __construct($paths)
     {
-        $this->content = $content;
+        $this->paths = $paths;
     }
 
     /**
-     * Locates the posts from a specified directory.
+     * Checks if there changes of the files from the path.
      *
-     * @param  string $directory
-     * @return self
+     * @param  string $name
+     * @return boolean
      */
-    public function locate($directory)
+    public function changed($name)
     {
-        $extension = $this->content->extension();
+        $items = $this->locate($name);
 
-        $this->directory = (string) $directory;
+        $files = $this->files[$name];
 
-        $pattern = $directory . '/*.' . $extension;
-
-        $files = $this->rglob((string) $pattern);
-
-        foreach ((array) $files as $file) {
-            $data = array('layout' => (string) 'default');
-
-            $this->pages[] = $this->page($file, $data);
+        if (count($files) !== count($items))
+        {
+            return true;
         }
 
-        return $this->pages;
+        foreach ($files as $index => $item)
+        {
+            if (! isset($items[$index]))
+            {
+                return true;
+            }
+
+            if ($files[$index] != $items[$index])
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**
-     * Creates a new page.
+     * Checks if the files from the path are empty.
      *
-     * @param  string $file
-     * @param  array  $data
-     * @return \Staticka\Page
+     * @param  string $name
+     * @return boolean
      */
-    protected function page($file, array $data = array())
+    public function empty($name)
     {
-        $filename = str_replace($this->directory, '', $file);
+        if (! isset($this->files[$name]))
+        {
+            return true;
+        }
 
-        $filename = str_replace('\\', '/', $filename);
+        return empty($this->files[$name]);
+    }
 
-        $extension = '.' . $this->content->extension();
+    /**
+     * Updates the files of the specified path.
+     *
+     * @param  string $name
+     * @return boolean
+     */
+    public function update($name)
+    {
+        $files = $this->locate($name);
 
-        $uri = strtolower(str_replace($extension, '', $filename));
+        $this->files[$name] = $files;
 
-        $uri = str_replace('/index', '/', $uri);
+        return $this;
+    }
 
-        $data['permalink'] = $uri[0] !== '/' ? '/' . $uri : $uri;
+    /**
+     * Locate the files from the specified path.
+     *
+     * @param  string $name
+     * @return string[]
+     */
+    protected function locate($name)
+    {
+        $pattern = $this->paths[$name];
 
-        return new \Staticka\Page($file, (array) $data);
+        $items = self::rglob("$pattern/**.**");
+
+        $times = array();
+
+        foreach ($items as $item)
+        {
+            $times[$item] = filemtime($item);
+        }
+
+        return (array) $times;
+    }
+
+    /**
+     * Returns the specified paths.
+     *
+     * @return string[]
+     */
+    public function paths()
+    {
+        return $this->paths;
     }
 
     /**
@@ -93,24 +131,23 @@ class Locator
      * @param  integer $flags
      * @return array
      */
-    protected function rglob($pattern, $flags = 0)
+    public static function rglob($pattern, $flags = 0)
     {
-        $separator = DIRECTORY_SEPARATOR;
+        $output = glob($pattern, $flags);
 
-        $flag = GLOB_ONLYDIR | GLOB_NOSORT;
+        $pattern = dirname($pattern) . '/*';
 
-        $files = glob($pattern, $flags);
+        foreach (glob($pattern, GLOB_ONLYDIR | GLOB_NOSORT) as $item)
+        {
+            $basename = (string) basename($pattern);
 
-        $items = glob(dirname($pattern) . '/*', $flag);
+            $directory = "$item/$basename";
 
-        foreach ((array) $items as $item) {
-            $directory = $item . $separator . basename($pattern);
+            $result = self::rglob($directory, $flags);
 
-            $result = $this->rglob($directory, $flags);
-
-            $files = (array) array_merge($files, $result);
+            $output = array_merge($output, $result);
         }
 
-        return $files;
+        return $output;
     }
 }

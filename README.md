@@ -19,12 +19,24 @@ $ composer require staticka/console
 
 ## Basic Usage
 
-Create a new file named `hello-world.md`:
+Create a new file by running `staticka create`:
 
-**hello-world.md**
+``` bash
+$ staticka create "Hello World"
+```
+
+**pages/hello-world.md**
 
 ```
-# Hello World!
+---
+name: Hello World
+permalink: /hello-world
+layout: main.twig
+title: Hello World
+description: 
+---
+
+# Hello World
 
 This is my first post that is built by Staticka.
 ```
@@ -35,46 +47,117 @@ Then run the `staticka build` command to build the files:
 $ staticka build
 ```
 
-To see the output, open `build/hello-world/index.html` in a web browser.
+To see the output, open `public/hello-world/index.html` in a web browser.
 
-**build/hello-world/index.html**
+**public/hello-world/index.html**
 
 ``` html
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Hello World</title>
+  <title>Hello World - Staticka</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,700;1,300;1,700&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap">
+  <link rel="stylesheet" href="/css/main.css">
 </head>
 <body>
-  <h1>Hello World</h1>
-  <p>This is my first post that is built by Staticka.</p>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+      <a class="navbar-brand text-decoration-none" href="/">Rougin Gutib</a>
+    </div>
+  </nav>
+  <div class="jumbotron bg-dark text-white">
+    <div class="container">
+      <h1>Hello World</h1>
+      <p></p>
+    </div>
+  </div>
+  <div class="container post">
+    <h1>Hello World</h1>
+    <p>This is my first post that is built by Staticka.</p>
+  </div>
+  <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 </body>
 </html>
 ```
 
-### Options
+**NOTE**: The result above is minified by default.
 
-* `--source` - Location of the content files
+### Watching files for changes
 
-``` bash
-$ staticka build --source="pages"
-$ # Checks content files from `page` directory.
-```
-
-* `--output` - Path for the generated files
+To build the website after changes are made on specified folders, run the `staticka watch` in the terminal:
 
 ``` bash
-$ staticka build --output="output"
-$ # Puts all the compiled files to `output` directory.
+$ staticka watch
+
+Changes found in "pages"...
+Building website...
+Website built successfully!
 ```
 
-* `--website` - Specify a custom Website instance
+By default, it will watch any changes found in the `pages` directory.
 
-``` bash
-$ staticka build --website="Acme.php"
-$ # Uses `Acme.php` as `Siemes\Website` instance.
+## Adding additional data
+
+It is possible to add additional data by adding a new property named `staticka` in the `composer.json`.
+
+``` json
+{
+    "staticka":
+    {
+        "filters":
+        [
+            "Staticka\\Filter\\StyleMinifier",
+            "Staticka\\Filter\\HtmlMinifier",
+            "Staticka\\Filter\\ScriptMinifier"
+        ],
+        "paths":
+        {
+            "pages": "$ROOT$/pages",
+            "plates": "$ROOT$/plates",
+            "public": "$ROOT$/public",
+            "scripts": "$ROOT$/scripts",
+            "styles": "$ROOT$/styles"
+        },
+        "variables":
+        {
+            "github": "https://github.com/rougin",
+            "base_url": "https://roug.in/",
+            "website": "Rougin Gutib"
+        }
+    },
+    "require":
+    {
+        "staticka/expresso": "~0.1"
+    }
+}
 ```
+
+**NOTE**: `$ROOT$` is a special variable that corresponds to the directory of the `composer.json` file.
+
+### Filters
+
+Filters are helpful utilities that can alter the output after being generated. Some notable examples are the `HtmlMinifier`, `StyleMinifier`, and `ScriptMinifier` which minifies specified elements in a static page. By default, the mentioned filters were already included.
+
+### Paths
+
+These are a list of paths that are being used by Staticka in generating static pages and also being checked for changes when using the `staticka watch` command:
+
+* `pages` - folder path where the Markdown templates are being stored. When creating a new page through `staticka create`, the new file will be saved in this path.
+* `plates` - the location of the Twig templates. This can be used in updating the templates besides on the default layout.
+* `public` - where the static pages be stored after building.
+* `scripts` - location of the Javascript files
+* `styles` - location of the SASS files. By default, Staticka compiles SASS files and also provided `Bootstrap 4` SASS files out of the box.
+
+### Variables
+
+This section contains variables that can be passed for each page being generated. This might be useful when passing global variables such as the base URL, site name, or a text that must be available in all pages.
 
 ## Changelog
 

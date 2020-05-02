@@ -1,0 +1,23 @@
+{
+    "staticka":
+    {
+        "paths":
+        {
+            "pages": "$ROOT$/Pages",
+            "plates": "$BASE$/Plates",
+            "public": "$ROOT$/Public",
+            "scripts": "$BASE$/Scripts",
+            "styles": "$BASE$/Styles"
+        },
+        "styles":
+        {
+            "main.scss": "css/main.css"
+        },
+        "variables":
+        {
+            "github": "https://github.com/rougin",
+            "base_url": "https://roug.in/",
+            "website": "Rougin Gutib"
+        }
+    }
+}

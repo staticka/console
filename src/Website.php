@@ -2,95 +2,120 @@
 
 namespace Staticka\Console;
 
-use Staticka\Content\ContentInterface;
-use Zapheus\Renderer\Renderer;
-use Zapheus\Renderer\RendererInterface;
+use Staticka\Console\Factories\PageFactory;
+use Staticka\Website as Staticka;
 
 /**
  * Website
  *
- * @package Console
+ * @package Staticka
  * @author  Rougin Gutib <rougingutib@gmail.com>
  */
-class Website extends \Staticka\Website
+class Website extends Staticka
 {
     /**
-     * Directory path of the source files.
-     *
-     * @var string
+     * @var string[]
      */
-    protected $source = '';
+    protected $paths;
 
     /**
-     * Directory path for the static HTML files.
-     *
-     * @var string
+     * TODO: Create ScriptRendererContract
+     * @var \Staticka\Console\Contracts\ScriptRendererContract
      */
-    protected $output = '';
+    protected $script;
 
     /**
-     * Initializes the website instance.
-     *
-     * @param \Zapheus\Renderer\RendererInterface|null $renderer
-     * @param \Staticka\Content\ContentInterface|null  $content
+     * TODO: Create StyleRendererContract
+     * @var \Staticka\Console\Contracts\StyleRendererContract
      */
-    public function __construct(RendererInterface $renderer = null, ContentInterface $content = null)
+    protected $style;
+
+    /**
+     * Compiles the specified pages into HTML output.
+     *
+     * @param  string $output
+     * @return void
+     */
+    public function build($output)
     {
-        $path = __DIR__ . DIRECTORY_SEPARATOR . 'Pages';
+        $this->prepare($this->paths['pages']);
 
-        $renderer === null && $renderer = new Renderer($path);
+        try
+        {
+            if (file_exists($output))
+            {
+                $this->clear($output);
+            }
 
-        parent::__construct($renderer, $content);
+            parent::build($output);
+
+            $this->style->build();
+        }
+        catch (\Exception $e)
+        {
+            echo $e->getMessage() . PHP_EOL;
+        }
     }
 
     /**
-     * Locates the posts from a specified directory.
+     * Sets the specified paths for the website.
      *
-     * @param  string|null $directory
+     * @param  string[] $paths
      * @return self
      */
-    public function locate($directory = null)
+    public function paths($paths)
     {
-        $directory === null && $directory = $this->source;
-
-        $locator = new Locator($this->content);
-
-        $this->pages = $locator->locate((string) $directory);
+        $this->paths = $paths;
 
         return $this;
     }
 
     /**
-     * Returns the output directory path.
+     * Sets the StyleRenderer for the website.
      *
-     * @return string
-     */
-    public function output()
-    {
-        return $this->output;
-    }
-
-    /**
-     * Sets the value of a specified property.
-     *
-     * @param  string $key
-     * @param  mixed  $value
+     * @param  \Staticka\Console\Contracts\StyleRendererContract $style
      * @return self
      */
-    public function set($key, $value)
+    public function style($style)
     {
-        $this->$key = $value;
+        $this->style = $style;
 
         return $this;
     }
 
     /**
-     * Returns the source directory path.
+     * Prepares the pages for generation.
      *
-     * @return string
+     * @param  string $path
+     * @return void
      */
-    public function source()
+    protected function prepare($path)
     {
-        return $this->source;
+        $pages = Locator::rglob("$path/**.md");
+
+        $this->pages = array();
+
+        $factory = new PageFactory($this->layout());
+
+        $metadata = array();
+
+        foreach ($pages as $index => $file)
+        {
+            $metadata[$index] = $factory->data($file);
+        }
+
+        uasort($metadata, function ($a, $b)
+        {
+            return $a['created_at'] < $b['created_at'];
+        });
+
+        foreach ($pages as $index => $file)
+        {
+            $data = $metadata[$index];
+
+            $data['pages'] = $metadata;
+
+            $this->add($factory->make($file, $data));
+        }
     }
 }

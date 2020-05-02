@@ -2,19 +2,35 @@
 
 namespace Staticka\Console;
 
-use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Staticka\Console\Factories\SassFactory;
+use Staticka\Console\Factories\SiteFactory;
 
 /**
  * Builder
  *
- * @package Console
+ * @package Staticka
  * @author  Rougin Gutib <rougingutib@gmail.com>
  */
 class Builder extends Command
 {
+    /**
+     * @var array
+     */
+    protected $data = array();
+
+    /**
+     * @var string
+     */
+    protected $description = 'Builds static HTML files from content files';
+
+    /**
+     * @var string
+     */
+    protected $name = 'build';
+
     /**
      * Configures the current command.
      *
@@ -22,17 +38,20 @@ class Builder extends Command
      */
     protected function configure()
     {
-        $optional = (integer) InputOption::VALUE_OPTIONAL;
+        $this->setDescription($this->description);
+    }
 
-        list($source, $output) = array(getcwd(), (string) getcwd() . '/build');
+    /**
+     * Sets the data from the "composer.json".
+     *
+     * @param  array $data
+     * @return self
+     */
+    public function data($data)
+    {
+        $this->data = $data;
 
-        $this->setName('build')->setDescription('Builds static HTML files from content files');
-
-        $this->addOption('source', null, $optional, 'Location of the content files', $source);
-
-        $this->addOption('output', null, $optional, 'Path for the generated files', $output);
-
-        $this->addOption('website', null, $optional, 'Specify a custom Website instance', null);
+        return $this;
     }
 
     /**
@@ -44,38 +63,28 @@ class Builder extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $option = realpath($input->getOption('website'));
+        $output->writeln('<info>Building website...</info>');
 
-        $website = new \Staticka\Console\Website;
+        $public = $this->paths['public'];
 
-        file_exists($option) && $website = require (string) $option;
+        $paths = (array) $this->paths;
 
-        list($source, $build) = $this->paths($input, $website);
+        $sass = new SassFactory($this->paths['styles']);
 
-        file_exists($build) || $build = $input->getOption('output');
+        $sass = $sass->make($this->styles, $public);
 
-        $website->locate((string) $source)->compile((string) $build);
+        $website = new SiteFactory($this->paths['plates']);
 
-        $output->writeln('<info>Content built successfully!</info>');
-    }
+        $website = $website->make(null, $this->data);
 
-    /**
-     * Returns the source and output directories.
-     *
-     * @param  \Symfony\Component\Console\Input\InputInterface $input
-     * @param  \Staticka\Console\Website                       $website
-     * @return array
-     */
-    protected function paths(InputInterface $input, Website $website)
-    {
-        $source = realpath($input->getOption('source'));
+        $website->style($sass);
 
-        $output = realpath($input->getOption('output'));
+        unset($paths['public']);
 
-        $website->output() !== '' && $output = $website->output();
+        $website->paths($paths);
 
-        $website->source() !== '' && $source = $website->source();
+        $website->build($public);
 
-        return array($source, $output);
+        $output->writeln('<info>Website built successfully!</info>');
     }
 }
