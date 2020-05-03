@@ -21,7 +21,7 @@ class PageFactory
     protected $layout;
 
     /**
-     * @param \Staticka\Contract\LayoutContract $layout
+     * @param \Staticka\Contracts\LayoutContract $layout
      */
     public function __construct(LayoutContract $layout)
     {
@@ -43,8 +43,6 @@ class PageFactory
 
         $data['created_at'] = strtotime($data['id']);
 
-        $data = (array) $this->tags($data);
-
         $content = file_get_contents($file);
 
         list($info, $body) = Matter::parse($content);
@@ -53,7 +51,9 @@ class PageFactory
 
         $data = array_merge($data, $info);
 
-        return array_merge($data, compact('file'));
+        $data = (array) $this->tags($data);
+
+        return array_merge($data, array($file));
     }
 
     /**
@@ -61,17 +61,13 @@ class PageFactory
      *
      * @param  string $name
      * @param  array  $data
-     * @return \Staticka\Contract\PageContract
+     * @return \Staticka\Contracts\PageContract
      */
     public function make($name, $data = array())
     {
         $data = $data ? $data : $this->data($name);
 
-        $layout = $data[PageContract::DATA_LAYOUT];
-
-        $data[PageContract::DATA_PATH] = $layout;
-
-        return new Page($this->layout, (array) $data);
+        return new Page($this->layout, $data);
     }
 
     /**

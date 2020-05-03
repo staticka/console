@@ -49,13 +49,13 @@ class Creator extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $prefix = $input->getOption('prefix');
+        $prefix = (string) $input->getOption('prefix');
 
-        $name = $input->getArgument('name');
+        $name = (string) $input->getArgument('name');
 
         $factory = new FileFactory($this->paths['pages']);
 
-        $file = $factory->make($name, $prefix);
+        $file = $factory->make((string) $name, $prefix);
 
         $message = "$file created successfully!";
 

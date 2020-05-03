@@ -1,9 +1,9 @@
 ---
 name: $NAME
-permalink: $LINK
-layout: main.twig
+link: $LINK
+plate: main.twig
 title: $NAME
-description: 
+tags: post
 ---
 
 # $NAME

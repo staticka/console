@@ -23,6 +23,11 @@ class SassRenderer
     protected $path;
 
     /**
+     * @var \ScssPhp\ScssPhp\Compiler
+     */
+    protected $scss;
+
+    /**
      * @param string   $path
      * @param string[] $files
      */

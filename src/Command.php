@@ -16,6 +16,11 @@ use Symfony\Component\Console\Output\OutputInterface;
 class Command extends Symfony
 {
     /**
+     * @var string
+     */
+    protected $name = '';
+
+    /**
      * @var string[]
      */
     protected $paths = [];

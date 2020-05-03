@@ -18,7 +18,7 @@ class SassFactory
     protected $styles;
 
     /**
-     * @param array $styles
+     * @param string[] $styles
      */
     public function __construct($styles = array())
     {

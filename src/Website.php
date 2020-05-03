@@ -95,7 +95,7 @@ class Website extends Staticka
 
         $this->pages = array();
 
-        $factory = new PageFactory($this->layout());
+        $factory = new PageFactory($this->layout);
 
         $metadata = array();
 

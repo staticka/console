@@ -11,7 +11,7 @@ namespace Staticka\Console;
 class Locator
 {
     /**
-     * @var string[]
+     * @var string[][]
      */
     protected $files;
 
@@ -133,7 +133,7 @@ class Locator
      */
     public static function rglob($pattern, $flags = 0)
     {
-        $output = glob($pattern, $flags);
+        $output = (array) glob($pattern, $flags);
 
         $pattern = dirname($pattern) . '/*';
 

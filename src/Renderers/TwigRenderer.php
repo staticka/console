@@ -39,13 +39,13 @@ class TwigRenderer implements RendererContract
     /**
      * Renders a file from a specified template.
      *
-     * @param  string $template
+     * @param  string $name
      * @param  array  $data
      * @return string
      *
      * @throws \InvalidArgumentException
      */
-    public function render($template, array $data = array())
+    public function render($name, $data = array())
     {
         $data = array_merge($this->data, $data);
 
@@ -62,6 +62,6 @@ class TwigRenderer implements RendererContract
 
         $twig = new Environment(new ArrayLoader($plates));
 
-        return $twig->render($template, (array) $data);
+        return $twig->render($name, (array) $data);
     }
 }
