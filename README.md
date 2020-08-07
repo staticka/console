@@ -7,7 +7,7 @@
 [![Quality Score][ico-code-quality]][link-code-quality]
 [![Total Downloads][ico-downloads]][link-downloads]
 
-A console application for [Staticka](https://staticka.github.io/). Useful for building content and templates into static HTMLs using terminal commands.
+A console application for [Staticka](https://roug.in/staticka/). Useful for building content and templates into static HTMLs using terminal commands.
 
 ## Installation
 
@@ -119,6 +119,7 @@ It is possible to add additional data by adding a new property named `staticka` 
         ],
         "paths":
         {
+            "assets": "$ROOT$/assets",
             "pages": "$ROOT$/pages",
             "plates": "$ROOT$/plates",
             "public": "$ROOT$/public",
@@ -149,6 +150,7 @@ Filters are helpful utilities that can alter the output after being generated. S
 
 These are a list of paths that are being used by Staticka in generating static pages and also being checked for changes when using the `staticka watch` command:
 
+* `assets` - location of the static assets that will be copied during compilation.
 * `pages` - folder path where the Markdown templates are being stored. When creating a new page through `staticka create`, the new file will be saved in this path.
 * `plates` - the location of the Twig templates. This can be used in updating the templates besides on the default layout.
 * `public` - where the static pages be stored after building.
