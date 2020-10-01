@@ -47,7 +47,10 @@ class Website extends Staticka
                 $this->clear($output);
             }
 
-            $this->copy($this->paths['assets'], $output);
+            if (isset($this->paths['assets']))
+            {
+                $this->copy($this->paths['assets'], $output);
+            }
 
             parent::build($output);
 
