@@ -310,10 +310,10 @@ Please see [CHANGELOG][link-changelog] for more information what has changed rec
 
 ## Testing
 
-The unit tests for `Console` were written on [PHPUnit](https://phpunit.de/index.html):
+The unit tests of `Console` can be run using the `phpunit` command:
 
 ``` bash
-$ composer test
+$ vendor/bin/phpunit
 ```
 
 ## Credits
