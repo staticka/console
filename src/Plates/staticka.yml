@@ -1,0 +1,10 @@
+root_path: %%CURRENT_DIRECTORY%%
+timezone: Asia/Manila
+
+assets_path: %%CURRENT_DIRECTORY%%/assets
+build_path: %%CURRENT_DIRECTORY%%/build
+config_path: %%CURRENT_DIRECTORY%%/config
+pages_path: %%CURRENT_DIRECTORY%%/pages
+plates_path: %%CURRENT_DIRECTORY%%/plates
+scripts_path: %%CURRENT_DIRECTORY%%/scripts
+styles_path: %%CURRENT_DIRECTORY%%/styles

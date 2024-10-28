@@ -1,17 +1,16 @@
-# Console
+# Staticka Console
 
 [![Latest Version on Packagist][ico-version]][link-packagist]
 [![Software License][ico-license]][link-license]
-[![Build Status][ico-travis]][link-travis]
-[![Coverage Status][ico-scrutinizer]][link-scrutinizer]
-[![Quality Score][ico-code-quality]][link-code-quality]
+[![Build Status][ico-build]][link-build]
+[![Coverage Status][ico-coverage]][link-coverage]
 [![Total Downloads][ico-downloads]][link-downloads]
 
-A console application for [Staticka](https://roug.in/staticka/). Useful for building content and templates into static HTMLs using terminal commands.
+`Console` is a terminal-based package of [Staticka](https://roug.in/staticka) which allows creating and building of pages through a terminal.
 
 ## Installation
 
-Install `Console` via [Composer](https://getcomposer.org/):
+Installing the `Console` package is possible through [Composer](https://getcomposer.org/):
 
 ``` bash
 $ composer require staticka/console
@@ -19,153 +18,299 @@ $ composer require staticka/console
 
 ## Basic Usage
 
-Create a new file by running `staticka create`:
+To create a new page, use the `create` command with its title:
 
 ``` bash
-$ staticka create "Hello World"
+$ vendor/bin/staticka create "Hello world!"
+[PASS] "Hello world!" page successfully created!
 ```
 
-**pages/hello-world.md**
+``` md
+<!-- pages/20241028202552_hello-world.md -->
 
-```
 ---
-name: Hello World
-permalink: /hello-world
-layout: main.twig
-title: Hello World
-description: 
+name: Hello world!
+link: /hello-world
+title: Hello world!
+description:
+tags:
+category:
 ---
 
-# Hello World
-
-This is my first post that is built by Staticka.
+# Hello world!
 ```
 
-Then run the `staticka build` command to build the files:
+```
+ciacme/
+├── pages/
+│   └── 20241028202552_hello-world.md
+├── vendor/
+└── composer.json
+```
+
+After adding some text to the newly created page, use the `build` command to compile the `.md` files to `.html`:
 
 ``` bash
-$ staticka build
+$ vendor/bin/staticka build
+Added "Hello world!" page
+[PASS] Pages successfully compiled!
 ```
 
-To see the output, open `public/hello-world/index.html` in a web browser.
-
-**public/hello-world/index.html**
+```
+ciacme/
+├── build/
+│   └── hello-world/
+│       └── index.html
+├── pages/
+│   └── 20241028202552_hello-world.md
+├── vendor/
+└── composer.json
+```
 
 ``` html
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Hello World - Staticka</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,700;1,300;1,700&display=swap">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap">
-  <link rel="stylesheet" href="/css/main.css">
-</head>
-<body>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div class="container">
-      <a class="navbar-brand text-decoration-none" href="/">Rougin Gutib</a>
-    </div>
-  </nav>
-  <div class="jumbotron bg-dark text-white">
-    <div class="container">
-      <h1>Hello World</h1>
-      <p></p>
-    </div>
-  </div>
-  <div class="container post">
-    <h1>Hello World</h1>
-    <p>This is my first post that is built by Staticka.</p>
-  </div>
-  <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
-</body>
-</html>
+<!-- build/hello-world/index.html -->
+<h1>Hello world!</h1>
 ```
 
-**NOTE**: The result above is minified by default.
+> [!NOTE]
+> `Console` will try to create the required directories (e.g., `build`, `pages`) if they do not exists in the current working directory.
 
-### Watching files for changes
+## Using `staticka.yml`
 
-To build the website after changes are made on specified folders, run the `staticka watch` in the terminal:
+`Console` typically works out of the box without any configuration. But if there is a need to change the path of its other supported directories or needs to extend the core functionalities of `Console`, the `staticka.yml` file can be used in those kind of scenarios:
+
+``` yml
+# staticka.yml
+
+root_path: %%CURRENT_DIRECTORY%%
+timezone: Asia/Manila
+
+assets_path: %%CURRENT_DIRECTORY%%/assets
+build_path: %%CURRENT_DIRECTORY%%/build
+config_path: %%CURRENT_DIRECTORY%%/config
+pages_path: %%CURRENT_DIRECTORY%%/pages
+plates_path: %%CURRENT_DIRECTORY%%/plates
+scripts_path: %%CURRENT_DIRECTORY%%/scripts
+styles_path: %%CURRENT_DIRECTORY%%/styles
+```
+
+To create the said `staticka.yml` file, simply run the `initialize` command:
 
 ``` bash
-$ staticka watch
-
-Changes found in "pages"...
-Building website...
-Website built successfully!
+$ vendor/bin/staticka initialize
+[PASS] "staticka.yml" added successfully!
 ```
 
-By default, it will watch any changes found in the `pages` directory.
+After successfully creating the said file, it will provide the following properties below:
 
-## Adding additional data
+### `root_path`
 
-It is possible to add additional data by adding a new property named `staticka` in the `composer.json`.
+This property specifies the current working directory. By default, it uses the `%%CURRENT_DIRECTORY%%` placeholder that returns the current directory of the `staticka.yml` file:
 
-``` json
+``` yaml
+# staticka.yml
+
+root_path: %%CURRENT_DIRECTORY%%/Sample
+
+# ...
+```
+
+### `timezone`
+
+This allows to change the timezone to be used when creating timestamps of a new page. If not specified, `Console` will use the default timezone specified in the `php.ini` file:
+
+``` yaml
+# staticka.yml
+
+timezone: Asia/Tokyo
+
+# ...
+```
+
+### `assets_path`
+
+This specifies the path for all other web assets like images (`.jpg`, `.png`) and PDF files (`.pdf`). `Console` does not use this specified path but it might be useful to locate the directory for organizing asset files:
+
+``` yaml
+# staticka.yml
+
+assets_path: %%CURRENT_DIRECTORY%%/assets
+
+# ...
+```
+
+### `build_path`
+
+This is the property that will be used by `Console` to determine the destination directory of the compiled pages:
+
+``` yaml
+# staticka.yml
+
+build_path: %%CURRENT_DIRECTORY%%/build
+
+# ...
+```
+
+### `config_path`
+
+One of the properties of `Console` that locates the directory for storing configuration files. If defined, it will load its `.php` files to a `Configuration` class. The said class is useful when creating extensions to `Console`:
+
+``` yaml
+# staticka.yml
+
+config_path: %%CURRENT_DIRECTORY%%/config
+
+# ...
+```
+
+``` php
+// config/parser.php
+
+return array(
+    /**
+     * @var \Rougin\Staticka\Filter\FilterInterface[]
+     */
+    'filters' => array(
+        'Staticka\Expresso\Filters\GithubFilter',
+        'Staticka\Expresso\Filters\ReadmeFilter',
+    ),
+);
+```
+
+``` php
+// src/Package.php
+
+namespace Ciacme;
+
+use Rougin\Slytherin\Container\ContainerInterface;
+use Rougin\Slytherin\Container\ReflectionContainer;
+use Rougin\Slytherin\Integration\Configuration;
+use Rougin\Slytherin\Integration\IntegrationInterface;
+
+class Package implements IntegrationInterface
 {
-    "staticka":
+    public function define(ContainerInterface $container, Configuration $config)
     {
-        "filters":
-        [
-            "Staticka\\Filter\\StyleMinifier",
-            "Staticka\\Filter\\HtmlMinifier",
-            "Staticka\\Filter\\ScriptMinifier"
-        ],
-        "paths":
-        {
-            "assets": "$ROOT$/assets",
-            "pages": "$ROOT$/pages",
-            "plates": "$ROOT$/plates",
-            "public": "$ROOT$/public",
-            "scripts": "$ROOT$/scripts",
-            "styles": "$ROOT$/styles"
-        },
-        "variables":
-        {
-            "github": "https://github.com/rougin",
-            "base_url": "https://roug.in/",
-            "website": "Rougin Gutib"
-        }
-    },
-    "require":
-    {
-        "staticka/expresso": "~0.1"
+        // Will try to access the "config/parser.php" file ---
+        /** @var class-string[] */
+        $filters = $config->get('parser.filters', array());
+        // ---------------------------------------------------
+
+        // ...
     }
 }
 ```
 
-**NOTE**: `$ROOT$` is a special variable that corresponds to the directory of the `composer.json` file.
+> [!NOTE]
+> To allow custom packages for `Console`, kindly add the specified package class in `staticka.yml`. Please see the `Extending Console` section below for more information.
 
-### Filters
+### `pages_path`
 
-Filters are helpful utilities that can alter the output after being generated. Some notable examples are the `HtmlMinifier`, `StyleMinifier`, and `ScriptMinifier` which minifies specified elements in a static page. By default, the mentioned filters were already included.
+This is the location of the generated pages from `create` command:
 
-### Paths
+``` yaml
+# staticka.yml
 
-These are a list of paths that are being used by Staticka in generating static pages and also being checked for changes when using the `staticka watch` command:
+pages_path: %%CURRENT_DIRECTORY%%/pages
 
-* `assets` - location of the static assets that will be copied during compilation.
-* `pages` - folder path where the Markdown templates are being stored. When creating a new page through `staticka create`, the new file will be saved in this path.
-* `plates` - the location of the Twig templates. This can be used in updating the templates besides on the default layout.
-* `public` - where the static pages be stored after building.
-* `scripts` - location of the Javascript files
-* `styles` - location of the SASS files. By default, Staticka compiles SASS files and also provided `Bootstrap 4` SASS files out of the box.
+# ...
+```
 
-### Variables
+### `plates_path`
 
-This section contains variables that can be passed for each page being generated. This might be useful when passing global variables such as the base URL, site name, or a text that must be available in all pages.
+One of the special variables of `Console` to specify a directory that can be used for third-party templating engines (`RenderInterface`):
+
+``` yaml
+# staticka.yml
+
+plates_path: %%CURRENT_DIRECTORY%%/plates
+
+# ...
+```
+
+### `scripts_path`
+
+This is the property for the directory path of script files (`.js`, `.ts`). Although not being used internally by `Console`, this property can be used when extending core functionalities (e.g., compiling `.js` files through [Webpack](https://webpack.js.org/) when running the `build` command):
+
+``` yaml
+# staticka.yml
+
+scripts_path: %%CURRENT_DIRECTORY%%/scripts
+
+# ...
+```
+
+### `styles_path`
+
+Same as `scripts_path`, this property specifies the directory path for styling files (`.css`, `.sass`):
+
+``` yaml
+# staticka.yml
+
+styles_path: %%CURRENT_DIRECTORY%%/styles
+
+# ...
+```
+
+## Extending `Console`
+
+`Console` is based on the [Slytherin](https://roug.in/slytherin) PHP micro-framework which provides an easy way to integrate custom packages through `IntegrationInterface`. The said interface can be used to create instances related to `Staticka`:
+
+``` php
+// src/Package.php
+
+namespace Ciacme;
+
+use Rougin\Slytherin\Container\ContainerInterface;
+use Rougin\Slytherin\Container\ReflectionContainer;
+use Rougin\Slytherin\Integration\Configuration;
+use Rougin\Slytherin\Integration\IntegrationInterface;
+use Rougin\Staticka\Filter\HtmlMinifier;
+use Rougin\Staticka\Layout;
+
+class Package implements IntegrationInterface
+{
+    /**
+     * This sample package will always minify the compiled HTML files.
+     *
+     * @param \Rougin\Slytherin\Container\ContainerInterface $container
+     * @param \Rougin\Slytherin\Integration\Configuration    $config
+     *
+     * @return \Rougin\Slytherin\Container\ContainerInterface
+     */
+    public function define(ContainerInterface $container, Configuration $config)
+    {
+        $layout = new Layout;
+
+        $layout->addFilter(new HtmlMinifier);
+
+        $container->set(get_class($layout), $layout);
+
+        return $container;
+    }
+}
+```
+
+To add the specified custom package, kindly add it to the `staticka.yml` file:
+
+``` yml
+# staticka.yml
+
+root_path: %%CURRENT_DIRECTORY%%
+
+# ...
+
+packages:
+  - Ciacme\Package
+```
 
 ## Changelog
 
 Please see [CHANGELOG][link-changelog] for more information what has changed recently.
 
 ## Testing
+
+The unit tests for `Console` were written on [PHPUnit](https://phpunit.de/index.html):
 
 ``` bash
 $ composer test
@@ -179,18 +324,16 @@ $ composer test
 
 The MIT License (MIT). Please see [LICENSE][link-license] for more information.
 
-[ico-code-quality]: https://img.shields.io/scrutinizer/g/staticka/console.svg?style=flat-square
+[ico-build]: https://img.shields.io/github/actions/workflow/status/staticka/console/build.yml?style=flat-square
+[ico-coverage]: https://img.shields.io/codecov/c/github/staticka/console?style=flat-square
 [ico-downloads]: https://img.shields.io/packagist/dt/staticka/console.svg?style=flat-square
 [ico-license]: https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square
-[ico-scrutinizer]: https://img.shields.io/scrutinizer/coverage/g/staticka/console.svg?style=flat-square
-[ico-travis]: https://img.shields.io/travis/staticka/console/master.svg?style=flat-square
 [ico-version]: https://img.shields.io/packagist/v/staticka/console.svg?style=flat-square
 
+[link-build]: https://github.com/staticka/console/actions
 [link-changelog]: https://github.com/staticka/console/blob/master/CHANGELOG.md
-[link-code-quality]: https://scrutinizer-ci.com/g/staticka/console
 [link-contributors]: https://github.com/staticka/console/contributors
+[link-coverage]: https://app.codecov.io/gh/staticka/console
 [link-downloads]: https://packagist.org/packages/staticka/console
 [link-license]: https://github.com/staticka/console/blob/master/LICENSE.md
 [link-packagist]: https://packagist.org/packages/staticka/console
-[link-scrutinizer]: https://scrutinizer-ci.com/g/staticka/console/code-structure
-[link-travis]: https://travis-ci.org/staticka/console
