@@ -121,20 +121,22 @@ class Console extends Blueprint
 
         $items = array();
 
-        if (array_key_exists('packages', $data))
+        if (! array_key_exists('packages', $data))
         {
-            /** @var class-string[] */
-            $parsed = $data['packages'];
+            return $items;
+        }
 
-            foreach ($parsed as $item)
-            {
-                $class = new \ReflectionClass($item);
+        /** @var class-string[] */
+        $parsed = $data['packages'];
 
-                /** @var \Rougin\Slytherin\Integration\IntegrationInterface */
-                $package = $class->newInstanceArgs(array());
+        foreach ($parsed as $item)
+        {
+            $class = new \ReflectionClass($item);
 
-                $items[] = $package;
-            }
+            /** @var \Rougin\Slytherin\Integration\IntegrationInterface */
+            $package = $class->newInstanceArgs(array());
+
+            $items[] = $package;
         }
 
         return $items;

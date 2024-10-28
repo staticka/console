@@ -25,22 +25,6 @@ class ScriptTest extends Testcase
     }
 
     /**
-     * @return void
-     */
-    public function test_creating_new_page()
-    {
-        $test = $this->findCommand('create');
-
-        $test->execute(array('name' => 'Hello world!'));
-
-        $expected = $this->getTemplate('HelloWorld.md');
-
-        $actual = $this->getActualPage('hello-world');
-
-        $this->assertEquals($expected, $actual);
-    }
-
-    /**
      * @depends test_creating_new_page
      *
      * @return void
@@ -60,6 +44,22 @@ class ScriptTest extends Testcase
         $this->deletePath('build');
 
         $this->deletePath('pages');
+    }
+
+    /**
+     * @return void
+     */
+    public function test_creating_new_page()
+    {
+        $test = $this->findCommand('create');
+
+        $test->execute(array('name' => 'Hello world!'));
+
+        $expected = $this->getTemplate('HelloWorld.md');
+
+        $actual = $this->getActualPage('hello-world');
+
+        $this->assertEquals($expected, $actual);
     }
 
     /**
