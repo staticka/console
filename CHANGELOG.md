@@ -15,7 +15,7 @@ All notable changes to `Console` will be documented in this file.
 - Simplified code structure
 - Workflow provider to `Github Actions`
 
-### Deleted
+### Removed
 - Options for `build` command
 
 ## [0.1.1](https://github.com/staticka/staticka/compare/v0.1.0...v0.1.1) - 2018-04-08
