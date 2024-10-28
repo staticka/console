@@ -59,10 +59,12 @@ class Create extends Command
      */
     public function run()
     {
+        // @codeCoverageIgnoreStart -------
         if (! is_dir($this->path))
         {
             mkdir($this->path, 0777, true);
         }
+        // --------------------------------
 
         date_default_timezone_set($this->timezone);
 

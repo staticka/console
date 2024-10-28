@@ -34,12 +34,10 @@ class Init extends InitializeCommand
      */
     protected function getRootPath()
     {
-        // $root = __DIR__ . '/../../../../../';
-        $root = __DIR__ . '/../../../../../../';
+        $root = __DIR__ . '/../../../../../';
 
         $exists = file_exists($root . '/vendor/autoload.php');
 
-        // return $exists ? $root : __DIR__ . '/../../';
-        return $exists ? $root : __DIR__ . '/../../../';
+        return $exists ? $root : __DIR__ . '/../../';
     }
 }
