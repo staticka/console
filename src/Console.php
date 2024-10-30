@@ -5,7 +5,7 @@ namespace Staticka\Console;
 use Rougin\Blueprint\Blueprint;
 use Rougin\Blueprint\Container;
 use Rougin\Slytherin\Integration\Configuration;
-use Rougin\Staticka\Render;
+use Staticka\Render;
 use Symfony\Component\Yaml\Yaml;
 
 /**
@@ -229,7 +229,7 @@ class Console extends Blueprint
         $platesPath = $this->getPlatesPath();
         $render = new Render($platesPath);
 
-        $name = 'Rougin\Staticka\Render\RenderInterface';
+        $name = 'Staticka\Render\RenderInterface';
 
         $container->set($name, $render);
         // ----------------------------------------------

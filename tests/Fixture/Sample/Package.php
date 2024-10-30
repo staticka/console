@@ -5,8 +5,8 @@ namespace Staticka\Console\Fixture\Sample;
 use Rougin\Slytherin\Container\ContainerInterface;
 use Rougin\Slytherin\Integration\Configuration;
 use Rougin\Slytherin\Integration\IntegrationInterface;
-use Rougin\Staticka\Parser;
-use Rougin\Staticka\Render;
+use Staticka\Parser;
+use Staticka\Render;
 
 /**
  * @package Staticka

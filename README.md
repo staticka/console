@@ -168,7 +168,7 @@ config_path: %%CURRENT_DIRECTORY%%/config
 
 return array(
     /**
-     * @var \Rougin\Staticka\Filter\FilterInterface[]
+     * @var \Staticka\Filter\FilterInterface[]
      */
     'filters' => array(
         'Staticka\Expresso\Filters\GithubFilter',
@@ -265,8 +265,8 @@ use Rougin\Slytherin\Container\ContainerInterface;
 use Rougin\Slytherin\Container\ReflectionContainer;
 use Rougin\Slytherin\Integration\Configuration;
 use Rougin\Slytherin\Integration\IntegrationInterface;
-use Rougin\Staticka\Filter\HtmlMinifier;
-use Rougin\Staticka\Layout;
+use Staticka\Filter\HtmlMinifier;
+use Staticka\Layout;
 
 class Package implements IntegrationInterface
 {

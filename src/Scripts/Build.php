@@ -3,10 +3,10 @@
 namespace Staticka\Console\Scripts;
 
 use Rougin\Blueprint\Command;
-use Rougin\Staticka\Layout;
-use Rougin\Staticka\Parser;
-use Rougin\Staticka\Render\RenderInterface;
-use Rougin\Staticka\Site;
+use Staticka\Layout;
+use Staticka\Parser;
+use Staticka\Render\RenderInterface;
+use Staticka\Site;
 use Staticka\Console\Staticka;
 
 /**
@@ -32,31 +32,31 @@ class Build extends Command
     protected $description = 'Convert .md files to .html';
 
     /**
-     * @var \Rougin\Staticka\Layout
+     * @var \Staticka\Layout
      */
     protected $layout;
 
     /**
-     * @var \Rougin\Staticka\Parser
+     * @var \Staticka\Parser
      */
     protected $parser;
 
     /**
-     * @var \Rougin\Staticka\Render\RenderInterface
+     * @var \Staticka\Render\RenderInterface
      */
     protected $render;
 
     /**
-     * @var \Rougin\Staticka\Site
+     * @var \Staticka\Site
      */
     protected $site;
 
     /**
-     * @param \Rougin\Staticka\Layout                 $layout
-     * @param \Rougin\Staticka\Parser                 $parser
-     * @param \Rougin\Staticka\Render\RenderInterface $render
-     * @param \Rougin\Staticka\Site                   $site
-     * @param \Staticka\Console\Staticka              $staticka
+     * @param \Staticka\Layout                 $layout
+     * @param \Staticka\Parser                 $parser
+     * @param \Staticka\Render\RenderInterface $render
+     * @param \Staticka\Site                   $site
+     * @param \Staticka\Console\Staticka       $staticka
      */
     public function __construct(Layout $layout, Parser $parser, RenderInterface $render, Site $site, Staticka $staticka)
     {

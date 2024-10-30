@@ -2,8 +2,8 @@
 
 namespace Staticka\Console;
 
-use Rougin\Staticka\Page;
-use Rougin\Staticka\Parser;
+use Staticka\Page;
+use Staticka\Parser;
 
 /**
  * @package Staticka
@@ -28,7 +28,7 @@ class Staticka
     protected $pages;
 
     /**
-     * @var \Rougin\Staticka\Parser|null
+     * @var \Staticka\Parser|null
      */
     protected $parser;
 
@@ -72,7 +72,7 @@ class Staticka
     }
 
     /**
-     * @return \Rougin\Staticka\Page[]
+     * @return \Staticka\Page[]
      */
     public function getPages()
     {
@@ -104,7 +104,7 @@ class Staticka
     }
 
     /**
-     * @return \Rougin\Staticka\Parser
+     * @return \Staticka\Parser
      */
     public function getParser()
     {
@@ -172,7 +172,7 @@ class Staticka
     }
 
     /**
-     * @param \Rougin\Staticka\Parser $parser
+     * @param \Staticka\Parser $parser
      *
      * @return self
      */
