@@ -23,9 +23,9 @@ class Package implements IntegrationInterface
      */
     public function define(ContainerInterface $container, Configuration $config)
     {
-        $class = 'Staticka\Console\Staticka';
+        $class = 'Staticka\System';
 
-        /** @var \Staticka\Console\Staticka */
+        /** @var \Staticka\System */
         $old = $container->get($class);
 
         $platesPath = $old->getPagesPath();

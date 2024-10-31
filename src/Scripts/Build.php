@@ -7,7 +7,7 @@ use Staticka\Layout;
 use Staticka\Parser;
 use Staticka\Render\RenderInterface;
 use Staticka\Site;
-use Staticka\Console\Staticka;
+use Staticka\System;
 
 /**
  * @package Staticka
@@ -17,7 +17,7 @@ use Staticka\Console\Staticka;
 class Build extends Command
 {
     /**
-     * @var \Staticka\Console\Staticka
+     * @var \Staticka\System
      */
     protected $app;
 
@@ -56,11 +56,11 @@ class Build extends Command
      * @param \Staticka\Parser                 $parser
      * @param \Staticka\Render\RenderInterface $render
      * @param \Staticka\Site                   $site
-     * @param \Staticka\Console\Staticka       $staticka
+     * @param \Staticka\System                 $system
      */
-    public function __construct(Layout $layout, Parser $parser, RenderInterface $render, Site $site, Staticka $staticka)
+    public function __construct(Layout $layout, Parser $parser, RenderInterface $render, Site $site, System $system)
     {
-        $this->app = $staticka;
+        $this->app = $system;
 
         $this->layout = $layout;
 

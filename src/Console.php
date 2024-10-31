@@ -5,6 +5,7 @@ namespace Staticka\Console;
 use Rougin\Blueprint\Blueprint;
 use Rougin\Blueprint\Container;
 use Rougin\Slytherin\Integration\Configuration;
+use Staticka\Package;
 use Staticka\Render;
 use Symfony\Component\Yaml\Yaml;
 

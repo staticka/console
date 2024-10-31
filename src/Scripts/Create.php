@@ -3,7 +3,7 @@
 namespace Staticka\Console\Scripts;
 
 use Rougin\Blueprint\Command;
-use Staticka\Console\Staticka;
+use Staticka\System;
 
 /**
  * @package Staticka
@@ -33,13 +33,13 @@ class Create extends Command
     protected $timezone;
 
     /**
-     * @param \Staticka\Console\Staticka $staticka
+     * @param \Staticka\System $system
      */
-    public function __construct(Staticka $staticka)
+    public function __construct(System $system)
     {
-        $this->path = $staticka->getPagesPath();
+        $this->path = $system->getPagesPath();
 
-        $this->timezone = $staticka->getTimezone();
+        $this->timezone = $system->getTimezone();
     }
 
     /**
