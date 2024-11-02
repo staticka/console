@@ -53,18 +53,20 @@ class Create extends Command
     }
 
     /**
+     * TODO: Move logic to a depot from "staticka/staticka" instead.
+     *
      * Executes the command.
      *
      * @return integer
      */
     public function run()
     {
-        // @codeCoverageIgnoreStart -------
+        // @codeCoverageIgnoreStart
         if (! is_dir($this->path))
         {
             mkdir($this->path, 0777, true);
         }
-        // --------------------------------
+        // @endCoverageIgnoreEnd
 
         date_default_timezone_set($this->timezone);
 
@@ -89,6 +91,8 @@ class Create extends Command
     }
 
     /**
+     * TODO: Migrate code to "staticka/staticka" instead.
+     *
      * @link https://stackoverflow.com/a/2103815
      *
      * @param string $text
