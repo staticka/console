@@ -79,7 +79,7 @@ ciacme/
 
 `Console` typically works out of the box without any configuration. But if there is a need to change the path of its other supported directories or needs to extend the core functionalities of `Console`, the `staticka.yml` file can be used in those kind of scenarios:
 
-``` yml
+``` yaml
 # staticka.yml
 
 root_path: %%CURRENT_DIRECTORY%%
@@ -293,7 +293,7 @@ class Package implements IntegrationInterface
 
 To add the specified custom package, kindly add it to the `staticka.yml` file:
 
-``` yml
+``` yaml
 # staticka.yml
 
 root_path: %%CURRENT_DIRECTORY%%
