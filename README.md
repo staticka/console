@@ -52,7 +52,6 @@ After adding some text to the newly created page, use the `build` command to com
 
 ``` bash
 $ vendor/bin/staticka build
-Added "Hello world!" page
 [PASS] Pages successfully compiled!
 ```
 

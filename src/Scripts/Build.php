@@ -89,8 +89,6 @@ class Build extends Command
             $page->setLayout($this->layout);
 
             $this->site->addPage($page);
-
-            $this->showText('Added "' . $page->getName() . '" page');
         }
 
         $output = $this->app->getBuildPath();
