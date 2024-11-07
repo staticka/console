@@ -3,6 +3,7 @@
 namespace Staticka\Console\Scripts;
 
 use Rougin\Blueprint\Command;
+use Staticka\Depots\PageDepot;
 use Staticka\System;
 
 /**
@@ -23,6 +24,11 @@ class Create extends Command
     protected $description = 'Create a new page';
 
     /**
+     * @var \Staticka\Depots\PageDepot
+     */
+    protected $page;
+
+    /**
      * @var string
      */
     protected $path;
@@ -33,13 +39,20 @@ class Create extends Command
     protected $timezone;
 
     /**
-     * @param \Staticka\System $system
+     * @param \Staticka\Depots\PageDepot $page
+     * @param \Staticka\System           $system
      */
-    public function __construct(System $system)
+    public function __construct(PageDepot $page, System $system)
     {
-        $this->path = $system->getPagesPath();
+        $path = $system->getPagesPath();
 
-        $this->timezone = $system->getTimezone();
+        $this->path = $path;
+
+        $this->page = $page;
+
+        $timezone = $system->getTimezone();
+
+        $this->timezone = $timezone;
     }
 
     /**
@@ -73,77 +86,14 @@ class Create extends Command
         /** @var string */
         $name = $this->getArgument('name');
 
-        // Set the file name of the new page ---------------------
-        $file = $this->getSlug($name);
+        $data = array('name' => $name);
 
-        $prefix = date('YmdHis');
+        $data['link'] = $this->page->getSlug($name);
 
-        $file = $this->path . '/' . $prefix . '_' . $file . '.md';
-        // -------------------------------------------------------
-
-        $data = $this->setData($name);
-
-        file_put_contents($file, $data);
+        $this->page->create($data);
 
         $this->showPass('"' . $name . '" page successfully created!');
 
         return self::RETURN_SUCCESS;
-    }
-
-    /**
-     * TODO: Migrate code to "staticka/staticka" instead.
-     *
-     * @link https://stackoverflow.com/a/2103815
-     *
-     * @param string $text
-     *
-     * @return string
-     */
-    protected function getSlug($text)
-    {
-        // Convert to entities --------------------------
-        $text = htmlentities($text, ENT_QUOTES, 'UTF-8');
-        // ----------------------------------------------
-
-        // Regex to convert accented chars into their closest a-z ASCII equivelent --------------
-        $pattern = '~&([a-z]{1,2})(?:acute|cedil|circ|grave|lig|orn|ring|slash|th|tilde|uml);~i';
-
-        /** @var string */
-        $text = preg_replace($pattern, '$1', $text);
-        // --------------------------------------------------------------------------------------
-
-        // Convert back from entities -------------------------
-        $text = html_entity_decode($text, ENT_QUOTES, 'UTF-8');
-        // ----------------------------------------------------
-
-        // Any straggling caracters that are not strict alphanumeric are replaced with a dash ---
-        /** @var string */
-        $text = preg_replace('~[^0-9a-z]+~i', '-', $text);
-        // --------------------------------------------------------------------------------------
-
-        // Trim / cleanup / all lowercase ---
-        $text = trim($text, '-');
-
-        return strtolower($text);
-        // ----------------------------------
-    }
-
-    /**
-     * @param string $name
-     *
-     * @return string
-     */
-    protected function setData($name)
-    {
-        $path = __DIR__ . '/../Plates/default.md';
-
-        /** @var string */
-        $data = file_get_contents($path);
-
-        $data = str_replace('[TITLE]', $name, $data);
-
-        $link = $this->getSlug($name);
-
-        return str_replace('[LINK]', $link, $data);
     }
 }
