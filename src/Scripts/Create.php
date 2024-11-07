@@ -79,7 +79,7 @@ class Create extends Command
         {
             mkdir($this->path, 0777, true);
         }
-        // @endCoverageIgnoreEnd
+        // @codeCoverageIgnoreEnd
 
         date_default_timezone_set($this->timezone);
 
