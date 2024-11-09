@@ -2,7 +2,7 @@
 
 All notable changes to `Console` will be documented in this file.
 
-## [0.2.0](https://github.com/staticka/staticka/compare/v0.1.1...v0.2.0) - Unreleased
+## [0.2.0](https://github.com/staticka/console/compare/v0.1.1...v0.2.0) - 2024-11-10
 
 ### Added
 - `create` command for creating pages
@@ -18,7 +18,7 @@ All notable changes to `Console` will be documented in this file.
 ### Removed
 - Options for `build` command
 
-## [0.1.1](https://github.com/staticka/staticka/compare/v0.1.0...v0.1.1) - 2018-04-08
+## [0.1.1](https://github.com/staticka/console/compare/v0.1.0...v0.1.1) - 2018-04-08
 
 ### Changed
 - Version of `staticka/staticka` in `composer.json`
