@@ -6,7 +6,7 @@
 [![Coverage Status][ico-coverage]][link-coverage]
 [![Total Downloads][ico-downloads]][link-downloads]
 
-`Console` is a terminal-based package of [Staticka](https://roug.in/staticka) which allows creating and building of pages through a terminal.
+`Console` is a terminal-based package of [Staticka](https://github.com/staticka/staticka) which allows creating and building of pages through a terminal.
 
 ## Installation
 
@@ -253,7 +253,7 @@ styles_path: %%CURRENT_DIRECTORY%%/styles
 
 ## Extending `Console`
 
-`Console` is based on the [Slytherin](https://roug.in/slytherin) PHP micro-framework which provides an easy way to integrate custom packages through `IntegrationInterface`. The said interface can be used to create instances related to `Staticka`:
+`Console` is based on the [Slytherin](https://github.com/rougin/slytherin) PHP micro-framework which provides an easy way to integrate custom packages through `IntegrationInterface`. The said interface can be used to create instances related to `Staticka`:
 
 ``` php
 // src/Package.php

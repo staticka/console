@@ -2,7 +2,7 @@
   "name": "staticka/console",
   "description": "Terminal-based package for Staticka.",
   "keywords": [ "php-console", "site-generator" ],
-  "homepage": "https://roug.in/staticka/",
+  "homepage": "https://roug.in/staticka/console/",
   "license": "MIT",
   "authors":
   [
