@@ -66,10 +66,6 @@ class Create extends Command
     }
 
     /**
-     * TODO: Move logic to a depot from "staticka/staticka" instead.
-     *
-     * Executes the command.
-     *
      * @return integer
      */
     public function run()
