@@ -17,7 +17,7 @@
   {
     "php": ">=5.3.0",
     "rougin/blueprint": "~0.7",
-    "staticka/staticka": "dev-master"
+    "staticka/staticka": "~0.4"
   },
   "require-dev":
   {
