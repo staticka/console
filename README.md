@@ -10,13 +10,13 @@
 
 ## Installation
 
-Installing the `Console` package is possible through [Composer](https://getcomposer.org/):
+Install the `Console` package via [Composer](https://getcomposer.org/):
 
 ``` bash
 $ composer require staticka/console
 ```
 
-## Basic Usage
+## Basic usage
 
 To create a new page, use the `create` command with its title:
 
@@ -305,19 +305,11 @@ packages:
 
 ## Changelog
 
-Please see [CHANGELOG][link-changelog] for more information what has changed recently.
+Please see [CHANGELOG][link-changelog] for more recent changes and latest updates.
 
-## Testing
+## Contributing
 
-The unit tests of `Console` can be run using the `phpunit` command:
-
-``` bash
-$ vendor/bin/phpunit
-```
-
-## Credits
-
-- [All contributors][link-contributors]
+See [CONTRIBUTING][link-contributing] on how to contribute to the project.
 
 ## License
 
