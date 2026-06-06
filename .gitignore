@@ -7,4 +7,6 @@ composer.lock
 docs
 GEMINI.md
 sites
+tests/Fixture/pages
+tests/Fixture/Sample/pages
 vendor
