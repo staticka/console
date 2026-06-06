@@ -97,8 +97,7 @@ class Console extends Blueprint
      */
     public function getRootPath()
     {
-        /** @var string */
-        $path = realpath($this->root);
+        $path = $this->root;
 
         return $this->getPath('root_path', $path);
     }
@@ -148,8 +147,7 @@ class Console extends Blueprint
      */
     protected function getParsed()
     {
-        /** @var string */
-        $path = realpath($this->root);
+        $path = $this->root;
 
         if (! file_exists($path . '/' . $this->file))
         {
@@ -179,8 +177,7 @@ class Console extends Blueprint
      */
     protected function getPath($name, $default)
     {
-        /** @var string */
-        $path = realpath($this->root);
+        $path = $this->root;
 
         $ds = DIRECTORY_SEPARATOR;
 

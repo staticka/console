@@ -18,8 +18,6 @@ class FileTest extends ScriptTest
     }
 
     /**
-     * @depends test_creating_new_page
-     *
      * @return void
      */
     public function test_config_path()

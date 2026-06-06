@@ -25,12 +25,14 @@ class ScriptTest extends Testcase
     }
 
     /**
-     * @depends test_creating_new_page
-     *
      * @return void
      */
     public function test_compiling_pages()
     {
+        $create = $this->findCommand('create');
+
+        $create->execute(array('name' => 'Hello world!'));
+
         $test = $this->findCommand('build');
 
         $test->execute(array());
@@ -90,8 +92,9 @@ class ScriptTest extends Testcase
             $path .= '/';
         }
 
-        /** @var string[] */
         $files = glob($path . '*', GLOB_MARK);
+
+        $files = is_array($files) ? $files : array();
 
         foreach ($files as $file)
         {
@@ -133,8 +136,9 @@ class ScriptTest extends Testcase
 
         $selected = '';
 
-        /** @var string[] */
         $files = glob($path . '/**/*.html');
+
+        $files = is_array($files) ? $files : array();
 
         foreach ($files as $file)
         {
@@ -167,8 +171,9 @@ class ScriptTest extends Testcase
     {
         $path = $this->app->getPagesPath();
 
-        /** @var string[] */
         $files = glob($path . '/*.md');
+
+        $files = is_array($files) ? $files : array();
 
         $selected = '';
 

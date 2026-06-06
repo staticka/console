@@ -23,8 +23,7 @@ class Init extends InitializeCommand
      */
     protected function getPlatePath()
     {
-        /** @var string */
-        return realpath(__DIR__ . '/../Plates');
+        return __DIR__ . '/../Plates';
     }
 
     /**
