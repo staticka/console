@@ -17,31 +17,75 @@ class ScriptTest extends Testcase
     protected $app;
 
     /**
-     * @return void
+     * @param string $name
+     *
+     * @return string
      */
-    public function doSetUp()
+    protected function getActualPage($name)
     {
-        $this->app = new Console(__DIR__ . '/Fixture');
+        $path = $this->app->getPagesPath();
+
+        $files = glob($path . '/*.md');
+
+        $files = is_array($files) ? $files : array();
+
+        $selected = '';
+
+        foreach ($files as $file)
+        {
+            $base = basename($file);
+
+            $parsed = substr($base, 15, strlen($base));
+
+            if ($parsed === $name . '.md')
+            {
+                $selected = $file;
+
+                break;
+            }
+        }
+
+        /** @var string */
+        $actual = file_get_contents($selected);
+
+        return str_replace("\r\n", "\n", $actual);
+    }
+
+    /**
+     * @param string $name
+     *
+     * @return string
+     */
+    protected function getTemplate($name)
+    {
+        $path = __DIR__ . '/Fixture/Output/' . $name;
+
+        /** @var string */
+        $file = file_get_contents($path);
+
+        return str_replace("\r\n", "\n", $file);
     }
 
     /**
      * @return void
      */
-    public function test_compiling_pages()
+    public function test_passed_if_page_compiled()
     {
         $create = $this->findCommand('create');
 
-        $create->execute(array('name' => 'Hello world!'));
+        $data = array('name' => 'Hello world!');
+
+        $create->execute($data);
 
         $test = $this->findCommand('build');
 
         $test->execute(array());
 
-        $expected = $this->getTemplate('HelloWorld.html');
+        $expect = $this->getTemplate('HelloWorld.html');
 
         $actual = $this->getActualHtml('hello-world');
 
-        $this->assertEquals($expected, $actual);
+        $this->assertEquals($expect, $actual);
 
         $this->deletePath('build');
 
@@ -51,17 +95,19 @@ class ScriptTest extends Testcase
     /**
      * @return void
      */
-    public function test_creating_new_page()
+    public function test_passed_if_page_created()
     {
         $test = $this->findCommand('create');
 
-        $test->execute(array('name' => 'Hello world!'));
+        $data = array('name' => 'Hello world!');
 
-        $expected = $this->getTemplate('HelloWorld.md');
+        $test->execute($data);
+
+        $expect = $this->getTemplate('HelloWorld.md');
 
         $actual = $this->getActualPage('hello-world');
 
-        $this->assertEquals($expected, $actual);
+        $this->assertEquals($expect, $actual);
     }
 
     /**
@@ -84,10 +130,12 @@ class ScriptTest extends Testcase
 
         if (! is_dir($path))
         {
-            throw new \InvalidArgumentException('"' . $path . '" must be a directory');
+            $text = '"' . $path . '" must be a directory';
+
+            throw new \InvalidArgumentException($text);
         }
 
-        if (substr($path, strlen($path) - 1, 1) != '/')
+        if (substr($path, -1) != '/')
         {
             $path .= '/';
         }
@@ -112,13 +160,25 @@ class ScriptTest extends Testcase
     }
 
     /**
+     * @return void
+     */
+    protected function doSetUp()
+    {
+        $path = __DIR__ . '/Fixture';
+
+        $this->app = new Console($path);
+    }
+
+    /**
      * @param string $name
      *
      * @return \Symfony\Component\Console\Tester\CommandTester
      */
     protected function findCommand($name)
     {
-        return new CommandTester($this->app->make()->find($name));
+        $command = $this->app->make()->find($name);
+
+        return new CommandTester($command);
     }
 
     /**
@@ -157,58 +217,8 @@ class ScriptTest extends Testcase
         }
 
         /** @var string */
-        $result = file_get_contents($selected);
+        $actual = file_get_contents($selected);
 
-        return str_replace("\r\n", "\n", $result);
-    }
-
-    /**
-     * @param string $name
-     *
-     * @return string
-     */
-    protected function getActualPage($name)
-    {
-        $path = $this->app->getPagesPath();
-
-        $files = glob($path . '/*.md');
-
-        $files = is_array($files) ? $files : array();
-
-        $selected = '';
-
-        foreach ($files as $file)
-        {
-            $base = basename($file);
-
-            $parsed = substr($base, 15, strlen($base));
-
-            if ($parsed === $name . '.md')
-            {
-                $selected = $file;
-
-                break;
-            }
-        }
-
-        /** @var string */
-        $result = file_get_contents($selected);
-
-        return str_replace("\r\n", "\n", $result);
-    }
-
-    /**
-     * @param string $name
-     *
-     * @return string
-     */
-    protected function getTemplate($name)
-    {
-        $path = __DIR__ . '/Fixture/Output/' . $name;
-
-        /** @var string */
-        $file = file_get_contents($path);
-
-        return str_replace("\r\n", "\n", $file);
+        return str_replace("\r\n", "\n", $actual);
     }
 }

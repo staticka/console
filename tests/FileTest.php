@@ -12,24 +12,26 @@ class FileTest extends ScriptTest
     /**
      * @return void
      */
-    public function doSetUp()
+    public function test_passed_if_config_path()
     {
-        $this->app = new Console(__DIR__ . '/Fixture/Sample');
+        $path = __DIR__ . '/Fixture/Sample/config';
+
+        $ds = DIRECTORY_SEPARATOR;
+
+        $expect = str_replace(array('/', '\\'), $ds, $path);
+
+        $actual = $this->app->getConfigPath();
+
+        $this->assertEquals($expect, $actual);
     }
 
     /**
      * @return void
      */
-    public function test_config_path()
+    protected function doSetUp()
     {
-        $expected = __DIR__ . '/Fixture/Sample/config';
+        $path = __DIR__ . '/Fixture/Sample';
 
-        $ds = DIRECTORY_SEPARATOR;
-
-        $expected = str_replace(array('/', '\\'), $ds, $expected);
-
-        $actual = $this->app->getConfigPath();
-
-        $this->assertEquals($expected, $actual);
+        $this->app = new Console($path);
     }
 }

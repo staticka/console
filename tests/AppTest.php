@@ -14,28 +14,28 @@ class AppTest extends Testcase
     /**
      * @return void
      */
-    public function test_combustor_yml_file()
+    public function test_passed_if_config_file()
     {
         $app = new Console(__DIR__ . '/Fixture');
 
-        $expected = 'Rougin\Blueprint\Wrapper';
+        $expect = 'Rougin\Blueprint\Wrapper';
 
         $actual = $app->make()->find('create');
 
-        $this->assertInstanceOf($expected, $actual);
+        $this->assertInstanceOf($expect, $actual);
     }
 
     /**
      * @return void
      */
-    public function test_without_combustor_yml()
+    public function test_passed_if_no_config_file()
     {
         $app = new Console(__DIR__ . '/../');
 
-        $expected = 'Rougin\Blueprint\Wrapper';
+        $expect = 'Rougin\Blueprint\Wrapper';
 
         $actual = $app->make()->find('initialize');
 
-        $this->assertInstanceOf($expected, $actual);
+        $this->assertInstanceOf($expect, $actual);
     }
 }
