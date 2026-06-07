@@ -323,7 +323,7 @@ The MIT License (MIT). Please see [LICENSE][link-license] for more information.
 
 [link-build]: https://github.com/staticka/console/actions
 [link-changelog]: https://github.com/staticka/console/blob/master/CHANGELOG.md
-[link-contributors]: https://github.com/staticka/console/contributors
+[link-contributing]: https://github.com/staticka/console/blob/master/CONTRIBUTING.md
 [link-coverage]: https://app.codecov.io/gh/staticka/console
 [link-downloads]: https://packagist.org/packages/staticka/console
 [link-license]: https://github.com/staticka/console/blob/master/LICENSE.md
