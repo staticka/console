@@ -2,7 +2,7 @@
 
 All notable changes to `Console` will be documented in this file.
 
-## [0.2.1](https://github.com/staticka/console/compare/v0.2.0...v0.2.1) - Unreleased
+## [0.2.1](https://github.com/staticka/console/compare/v0.2.0...v0.2.1) - 2026-11-18
 
 ### Added
 - Conformed to `Level 10` of `PHPStan`
